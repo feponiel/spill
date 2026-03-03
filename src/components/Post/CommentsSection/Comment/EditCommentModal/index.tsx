@@ -15,7 +15,7 @@ function editCommentFormSchemaBuilder(original: string) {
       .string()
       .trim()
       .min(1, "Comment cannot be empty!")
-      .max(10_000, "Comment cannot exceed 10k characters!")
+      .max(2_000, "Comment cannot exceed 2k characters!")
       .refine(value => value !== original, {
         message: "Comment content must be different!",
       }),
