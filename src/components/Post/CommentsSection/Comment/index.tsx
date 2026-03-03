@@ -7,6 +7,7 @@ import { CommentOptionsMenu } from './CommentOptionsMenu'
 import { useState } from 'react'
 import { DeleteCommentModal } from './DeleteCommentModal'
 import { EditCommentModal } from './EditCommentModal'
+import { api } from '@/lib/axios'
 
 interface CommentAuthor {
   name: string
@@ -21,15 +22,16 @@ interface CommentProps {
   createdAt: Date
   updatedAt: Date
   likesAmount: number
+  isLiked: boolean
 }
 
-export function Comment({ id, author, content, createdAt, updatedAt, likesAmount }: CommentProps) {
+export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked }: CommentProps) {
   createdAt = new Date(createdAt)
   updatedAt = new Date(updatedAt)
 
   const [isEdited, setIsEdited] = useState(updatedAt > createdAt)
   const [commentLikesAmount, setCommentLikesAmount] = useState(likesAmount)
-  const [isCommentLiked, setCommentLiked] = useState(false)
+  const [isCommentLiked, setCommentLiked] = useState(isLiked)
   const [isCommentOptionsMenuOpen, setCommentOptionsMenuOpen] = useState(false)
   const [isEditCommentModalOpen, setEditCommentModalOpen] = useState(false)
   const [isDeleteCommentModalOpen, setDeleteCommentModalOpen] = useState(false)
@@ -39,11 +41,15 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
     formatedDateRelativeToNow: creationDateRelativeToNow 
   } = formatDate(createdAt)
 
-  function handleLikeComment() {
+  async function handleLikeComment() {
     if (isCommentLiked) {
+      await api.delete(`/comments/${id}/like`)
+
       setCommentLikesAmount(prev => prev - 1)
       setCommentLiked(false)
     } else {
+      await api.post(`/comments/${id}/like`)
+
       setCommentLikesAmount(prev => prev + 1)
       setCommentLiked(true)
     }

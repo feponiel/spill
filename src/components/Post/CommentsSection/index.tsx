@@ -98,6 +98,7 @@ export function CommentSection({ postId, commentList, onCreateNewComment }: Comm
                 createdAt={ comment.created_at }
                 updatedAt={ comment.updated_at }
                 likesAmount={ comment.likes_amount }
+                isLiked={ comment.is_liked }
               />
             )) }
           </CommentsWrapper>
