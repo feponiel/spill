@@ -33,7 +33,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { commen
     }
   })
 
-  return Response.json(null, { status: 204 })
+  return new Response(null, { status: 204 })
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { commentId: string } }) {
@@ -61,5 +61,5 @@ export async function DELETE(request: NextRequest, { params }: { params: { comme
     }
   })
 
-  return Response.json(null, { status: 204 })
+  return new Response(null, { status: 204 })
 }

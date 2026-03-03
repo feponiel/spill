@@ -23,9 +23,10 @@ interface CommentProps {
   updatedAt: Date
   likesAmount: number
   isLiked: boolean
+  handleDelete: () => void
 }
 
-export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked }: CommentProps) {
+export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked, handleDelete }: CommentProps) {
   createdAt = new Date(createdAt)
   updatedAt = new Date(updatedAt)
 
@@ -60,6 +61,11 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
     setIsEdited(true)
     setCommentContent(newCommentContent)
     setEditCommentModalOpen(false)
+  }
+
+  function handleDeleteComment() {
+    handleDelete()
+    setDeleteCommentModalOpen(false)
   }
 
   return (
@@ -115,7 +121,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
       </CommentWrapper>
 
       <EditCommentModal commentId={ id } defaultCommentContentValue={ commentContent } isOpen={ isEditCommentModalOpen } handleToggleOpen={ setEditCommentModalOpen } handleEditComment={ handleEditComment } />
-      <DeleteCommentModal isOpen={ isDeleteCommentModalOpen } handleToggleModal={ setDeleteCommentModalOpen } />
+      <DeleteCommentModal commentId={ id } isOpen={ isDeleteCommentModalOpen } handleToggleModal={ setDeleteCommentModalOpen } handleDeleteComment={ handleDeleteComment } />
     </StyledComment>
   )
 }
