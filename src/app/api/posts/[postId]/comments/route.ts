@@ -28,10 +28,27 @@ export async function POST(request: NextRequest, { params }: { params: { postId:
       author_id: author.id,
       post_id: postId,
       content,
+    },
+    include: {
+      author: true,
     }
   })
 
-  return NextResponse.json(comment, { status: 201 })
+  return NextResponse.json({
+    id: comment.id,
+    author_id: comment.author_id,
+    post_id: comment.post_id,
+    content: comment.content,
+    created_at: comment.created_at,
+    updated_at: comment.updated_at,
+    likes_amount: 0,
+    is_liked: false,
+    author: {
+      name: comment.author.name,
+      synthesis: comment.author.synthesis,
+      avatar_url: comment.author.avatar_url,
+    }
+  }, { status: 201 })
 }
 
 export async function GET(
@@ -77,7 +94,7 @@ export async function GET(
       created_at: "desc"
     },
     skip,
-    take: limit
+    take: limit + 1
   })
 
   const remaining = limit - myComments.length
@@ -120,9 +137,11 @@ export async function GET(
   }
 
   const finalComments = [...myComments, ...otherComments]
+  const hasMore = finalComments.length === limit + 1
+  const displayList = finalComments.slice(0, limit)
 
-  return NextResponse.json(
-    finalComments.map(comment => ({
+  return NextResponse.json({
+    data: displayList.map(comment => ({
       id: comment.id,
       author_id: comment.author_id,
       post_id: comment.post_id,
@@ -137,6 +156,6 @@ export async function GET(
         avatar_url: comment.author.avatar_url
       }
     })),
-    { status: 200 }
-  )
+    hasMore
+  }, { status: 200 })
 }

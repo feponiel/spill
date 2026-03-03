@@ -10,7 +10,6 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { api } from "@/lib/axios";
-import { useEffect, useState } from "react";
 
 const createNewCommentFormSchema = z.object({
   content: z
@@ -36,38 +35,23 @@ type CommentWithEssentialInfo = CommentType & {
 interface CommentSectionProps {
   postId: string
   commentList: CommentWithEssentialInfo[]
+  hasMore: boolean
   onCreateNewComment: () => void
+  onDeleteComment: () => void
+  onViewMore: () => void
 }
 
-export function CommentSection({ postId, commentList, onCreateNewComment }: CommentSectionProps) {
-  const [comments, setComments] = useState<CommentWithEssentialInfo[]>(commentList)
+export function CommentSection({ postId, commentList, hasMore, onCreateNewComment, onDeleteComment, onViewMore }: CommentSectionProps) {
   const { formState: { isValid, isSubmitting }, handleSubmit, register, reset } = useForm<createNewCommentFormData>({
     resolver: zodResolver(createNewCommentFormSchema)
   })
   const { data: authUser, isLoading } = useAuthUser()
 
-  useEffect(() => {
-    setComments(commentList)
-  }, [commentList])
-
   async function handleCreateNewComment(formData: createNewCommentFormData) {
     const { content } = formData
-
-    const { data: newComment } = await api.post(`/posts/${postId}/comments`, {
-      content,
-    })
-
+    await api.post(`/posts/${postId}/comments`, { content })
     onCreateNewComment()
-
     reset()
-  }
-
-  function handleDeleteComment(commentId: string) {
-    setComments(prev => prev.filter(comment => comment.id !== commentId))
-  }
-
-  function handleViewMoreComments() {
-
   }
 
   return (
@@ -99,7 +83,7 @@ export function CommentSection({ postId, commentList, onCreateNewComment }: Comm
 
         <CommentList>
           <CommentsWrapper>
-            { comments.map(comment => (
+            { commentList.map(comment => (
               <Comment
                 key={ comment.id }
                 id={ comment.id }
@@ -110,16 +94,18 @@ export function CommentSection({ postId, commentList, onCreateNewComment }: Comm
                 likesAmount={ comment.likes_amount }
                 isLiked={ comment.is_liked }
                 amITheAuthor = { authUser?.id === comment.author_id }
-                handleDelete={ () => handleDeleteComment(comment.id) }
+                handleDelete={ onDeleteComment }
               />
             )) }
           </CommentsWrapper>
 
           <footer>
-            <ViewMoreButton onClick={ handleViewMoreComments }>
-              <ArrowDownIcon weight="bold" />
-              View more comments
-            </ViewMoreButton>
+            {hasMore && (
+              <ViewMoreButton onClick={onViewMore}>
+                <ArrowDownIcon weight="bold" />
+                View more comments
+              </ViewMoreButton>
+            )}
           </footer>
         </CommentList>
       </CommentsSectionWrapper>

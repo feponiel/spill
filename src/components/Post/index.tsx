@@ -50,6 +50,8 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
   updatedAt = new Date(updatedAt)
 
   const [comments, setComments] = useState<CommentWithEssentialInfo[]>([])
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(false)
   const [isEdited, setIsEdited] = useState(updatedAt > publishedAt)
   const [postContent, setPostContent] = useState(content)
   const [postLikesAmount, setPostLikesAmount] = useState(likesAmount)
@@ -79,16 +81,51 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
     }
   }
 
-  async function fetchComments() {
-    const { data: commentList } = await api.get(`/posts/${id}/comments`)
+  async function fetchComments(pageToFetch = 1) {
+    const { data: response } = await api.get(
+      `/posts/${id}/comments?page=${pageToFetch}&limit=5`
+    )
 
-    setComments(commentList)
+    if (pageToFetch === 1) {
+      setComments(response.data)
+    } else {
+      setComments(prev => {
+        const existingIds = new Set(prev.map(c => c.id))
+        const newComments = response.data.filter(
+          (c: CommentWithEssentialInfo) => !existingIds.has(c.id)
+        )
+        return [...prev, ...newComments]
+      })
+    }
+
+    setHasMore(response.hasMore)
+  }
+
+  async function handleCreateComment() {
+    setPostCommentsAmount(prev => prev + 1)
+    setPage(1)
+    setHasMore(true)
+    await fetchComments(1)
+  }
+
+  async function handleDeleteComment() {
+    setPostCommentsAmount(prev => prev - 1)
+    setPage(1)
+    await fetchComments(1)
   }
 
   async function handleOpenComments() {
-    if (comments.length == 0) {
-      fetchComments()
+    if (comments.length === 0) {
+      setPage(1)
+      setHasMore(true)
+      await fetchComments(1)
     }
+  }
+
+  function handleViewMoreComments() {
+    const nextPage = page + 1
+    setPage(nextPage)
+    fetchComments(nextPage)
   }
 
   function handleEditPost(newPostContent: string) {
@@ -147,9 +184,16 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
       </Content>
 
       <Collapsible.Root open={ isCommentSectionOpen } onOpenChange={ setCommentSectionOpen }>
-        <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ commentsAmount } onLikePost={ handleLikePost } onOpenComments={ handleOpenComments } />
+        <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ postCommentsAmount } onLikePost={ handleLikePost } onOpenComments={ handleOpenComments } />
 
-        <CommentSection postId={ id } commentList={ comments } onCreateNewComment={ fetchComments } />
+        <CommentSection 
+          postId={ id } 
+          commentList={ comments } 
+          hasMore={ hasMore } 
+          onCreateNewComment={ handleCreateComment }
+          onDeleteComment={ handleDeleteComment }
+          onViewMore={ handleViewMoreComments } 
+        />
       </Collapsible.Root>
 
       <EditPostModal defaultPostContentValue={ postContent } isOpen={ isEditPostModalOpen } postId={id} handleToggleOpen={ setEditPostModalOpen } handleEditPost={ handleEditPost } />
