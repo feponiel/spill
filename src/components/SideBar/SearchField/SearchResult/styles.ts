@@ -78,32 +78,8 @@ export const SearchResultsWrapper = styled.ul`
 
 export const NoResultsMessage = styled.p`
   ${({ theme }) => css`
-    margin-top: ${theme.space[3]};
+    padding: ${theme.space[4]} 0;
     font-size: ${theme.fontSizes["sm"]};
     color: ${theme.colors.shade400};
-  `}
-`
-
-export const ViewMoreButton = styled.button`
-  ${({ theme }) => css`
-    display: flex;
-    align-items: center;
-    flex: 1;
-    gap: ${theme.space[1]};
-    line-height: 0;
-    font-weight: ${theme.fontWeights.bold};
-    color: ${theme.colors.accentColorDark};
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: .2s;
-
-    svg {
-      font-size: ${theme.fontSizes.sm};
-    }
-
-    &:hover {
-      color: ${theme.name == 'light' ? theme.colors.accentColor : theme.colors.accentColorLight};
-    }
   `}
 `

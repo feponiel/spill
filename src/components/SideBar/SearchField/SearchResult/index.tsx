@@ -1,6 +1,5 @@
 import * as RadioGroup from "@radix-ui/react-radio-group"
-import { NoResultsMessage, SearchResultContainer, SearchResultHeader, SearchResultList, SearchResultsWrapper, StyledSearchResult, ViewMoreButton } from "./styles"
-import { ArrowDownIcon } from "@phosphor-icons/react"
+import { NoResultsMessage, SearchResultContainer, SearchResultHeader, SearchResultList, SearchResultsWrapper, StyledSearchResult } from "./styles"
 
 export function SearchResult() {
   function handleViewMoreResults() {}
@@ -22,16 +21,9 @@ export function SearchResult() {
 
         <SearchResultList>
           <SearchResultsWrapper></SearchResultsWrapper>
-
-          <NoResultsMessage>No results found :(</NoResultsMessage>
-
-          <footer>
-            <ViewMoreButton onClick={ handleViewMoreResults }>
-              <ArrowDownIcon weight="bold" />
-              View more results
-            </ViewMoreButton>
-          </footer>
         </SearchResultList>
+
+        <NoResultsMessage>No results found :(</NoResultsMessage>
       </SearchResultContainer>
     </StyledSearchResult>
   )
