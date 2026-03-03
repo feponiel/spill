@@ -30,6 +30,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
   updatedAt = new Date(updatedAt)
 
   const [isEdited, setIsEdited] = useState(updatedAt > createdAt)
+  const [commentContent, setCommentContent] = useState(content)
   const [commentLikesAmount, setCommentLikesAmount] = useState(likesAmount)
   const [isCommentLiked, setCommentLiked] = useState(isLiked)
   const [isCommentOptionsMenuOpen, setCommentOptionsMenuOpen] = useState(false)
@@ -53,6 +54,12 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
       setCommentLikesAmount(prev => prev + 1)
       setCommentLiked(true)
     }
+  }
+
+  function handleEditComment(newCommentContent: string) {
+    setIsEdited(true)
+    setCommentContent(newCommentContent)
+    setEditCommentModalOpen(false)
   }
 
   return (
@@ -91,7 +98,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
                 Edited
               </EditionWarn>
             )}
-            { content }
+            { commentContent }
           </p>
         </CommentContent>
 
@@ -107,7 +114,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
         </footer>
       </CommentWrapper>
 
-      <EditCommentModal defaultCommentContentValue={ content } isOpen={ isEditCommentModalOpen } handleToggleOpen={ setEditCommentModalOpen } />
+      <EditCommentModal commentId={ id } defaultCommentContentValue={ commentContent } isOpen={ isEditCommentModalOpen } handleToggleOpen={ setEditCommentModalOpen } handleEditComment={ handleEditComment } />
       <DeleteCommentModal isOpen={ isDeleteCommentModalOpen } handleToggleModal={ setDeleteCommentModalOpen } />
     </StyledComment>
   )
