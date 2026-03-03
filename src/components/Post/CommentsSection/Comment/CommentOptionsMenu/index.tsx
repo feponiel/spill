@@ -6,13 +6,14 @@ import { ReactElement } from "react";
 interface CommentOptionsMenuProps {
   trigger: ReactElement
   isOpen: boolean
+  amITheAuthor: boolean
   handleToggleMenu: (open: boolean) => void
   handleChooseEditOption: () => void
   handleChooseDeleteOption: () => void
 }
 
-export function CommentOptionsMenu({ trigger, isOpen, handleToggleMenu, handleChooseEditOption, handleChooseDeleteOption }: CommentOptionsMenuProps) {
-  return (
+export function CommentOptionsMenu({ trigger, isOpen, amITheAuthor, handleToggleMenu, handleChooseEditOption, handleChooseDeleteOption }: CommentOptionsMenuProps) {
+  return amITheAuthor && (
     <DropdownMenu trigger={ trigger } isOpen={ isOpen } onToggleOpen={ handleToggleMenu }>
       <Dropdown.Item onClick={ handleChooseEditOption }>
         <PencilIcon />

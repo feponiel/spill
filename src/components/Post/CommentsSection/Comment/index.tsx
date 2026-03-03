@@ -23,10 +23,11 @@ interface CommentProps {
   updatedAt: Date
   likesAmount: number
   isLiked: boolean
+  amITheAuthor: boolean
   handleDelete: () => void
 }
 
-export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked, handleDelete }: CommentProps) {
+export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked, amITheAuthor, handleDelete }: CommentProps) {
   createdAt = new Date(createdAt)
   updatedAt = new Date(updatedAt)
 
@@ -91,6 +92,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
                 </CommentOptionsMenuButton>
               }
               isOpen={ isCommentOptionsMenuOpen }
+              amITheAuthor={ amITheAuthor }
               handleToggleMenu={ setCommentOptionsMenuOpen }
               handleChooseEditOption={ () => setEditCommentModalOpen(true) }
               handleChooseDeleteOption={ () => setDeleteCommentModalOpen(true) }

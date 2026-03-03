@@ -109,6 +109,7 @@ export function CommentSection({ postId, commentList, onCreateNewComment }: Comm
                 updatedAt={ comment.updated_at }
                 likesAmount={ comment.likes_amount }
                 isLiked={ comment.is_liked }
+                amITheAuthor = { authUser?.id === comment.author_id }
                 handleDelete={ () => handleDeleteComment(comment.id) }
               />
             )) }
