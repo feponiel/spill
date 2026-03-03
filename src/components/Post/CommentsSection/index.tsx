@@ -2,24 +2,58 @@ import { Avatar } from "@/components/Avatar";
 import { CommentArea, CommentForm, CommentList, CommentsSectionWrapper, CommentsWrapper, StyledCommentsSection, SubmitCommentButton, ViewMoreButton } from "./styles";
 import { FormField } from "@/components/FormField";
 import { Comment } from "./Comment";
-import { ChangeEvent, SubmitEvent, useState } from "react";
 import { ArrowDownIcon } from "@phosphor-icons/react";
+import { Comment as CommentType } from "@prisma/client";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { LoadingWheel } from "@/components/LoadingWheel";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { api } from "@/lib/axios";
 
-export function CommentSection() {
-  const [newCommentContent, setNewCommentContent] = useState("")
+const createNewCommentFormSchema = z.object({
+  content: z
+    .string()
+    .trim()
+    .min(1)
+    .max(2_000)
+})
 
-  const isNewCommentContentEmpty = newCommentContent.length < 1
+type createNewCommentFormData = z.infer<typeof createNewCommentFormSchema>
 
-  function handleChangeCommentText(event: ChangeEvent<HTMLTextAreaElement>) {
-    event.target.setCustomValidity("")
+type CommentWithEssentialInfo = CommentType & {
+  likes_amount: number
+  is_liked: boolean
 
-    setNewCommentContent(event.target.value)
+  author: {
+    name: string
+    synthesis: string
+    avatar_url: string
   }
+}
 
-  function handleCreateNewComment(event: SubmitEvent) {
-    event.preventDefault()
+interface CommentSectionProps {
+  postId: string
+  commentList: CommentWithEssentialInfo[]
+  onCreateNewComment: () => void
+}
 
-    setNewCommentContent("")
+export function CommentSection({ postId, commentList, onCreateNewComment }: CommentSectionProps) {
+  const { formState: { isValid, isSubmitting }, handleSubmit, register, reset } = useForm<createNewCommentFormData>({
+    resolver: zodResolver(createNewCommentFormSchema)
+  })
+  const { data: authUser, isLoading } = useAuthUser()
+
+  async function handleCreateNewComment(formData: createNewCommentFormData) {
+    const { content } = formData
+
+    const { data: newComment } = await api.post(`/posts/${postId}/comments`, {
+      content,
+    })
+
+    onCreateNewComment()
+
+    reset()
   }
 
   function handleViewMoreComments() {
@@ -30,41 +64,42 @@ export function CommentSection() {
     <StyledCommentsSection>
       <CommentsSectionWrapper>
         <CommentArea>
-          <Avatar username="Felipe Elias" url="https://github.com/feponiel.png" hasBorder={false} />
+          { isLoading || !authUser ? (
+            <LoadingWheel size="sm" />
+          ) : (
+            <Avatar username={ authUser.name } url={ authUser.avatar_url } hasBorder={false} />
+          ) }
 
-          <CommentForm onSubmit={ (e) => handleCreateNewComment(e) }>
+          <CommentForm onSubmit={ handleSubmit(handleCreateNewComment) }>
             <FormField
                 type="textarea"
                 placeholder="Write something cool..."
-                name="newCommentContent"
-                realtimeValue={ newCommentContent }
-                onChange={ handleChangeCommentText }
-                required
+                {...register("content")}
               />
 
-              <SubmitCommentButton type="submit" disabled={ isNewCommentContentEmpty }>Submit</SubmitCommentButton>
+              <SubmitCommentButton type="submit" disabled={ !isValid }>
+                { isSubmitting ? (
+                  <LoadingWheel size="sm" color="white" />
+                ) : (
+                  <span>Submit</span>
+                ) }
+              </SubmitCommentButton>
           </CommentForm>
         </CommentArea>
 
         <CommentList>
           <CommentsWrapper>
-            <Comment
-              id="1"
-              author={ { id: "1", name: "Paulo Archanjo", email: "paulo@archanjo.com", synthesis: "Data Analyst", created_at: new Date(), avatar_url: "https://github.com/pauloarchanjo.png", updated_at: new Date(), banner_url: "https://github.com/diego3g.png"  } }
-              content="Not really."
-              createdAt={new Date()}
-              updatedAt={new Date()}
-              likesAmount={12}
-            />
-
-            <Comment
-              id="1"
-              author={ { id: "2", name: "João Victor", email: "jao@vitoriano", synthesis: "Linux Specialist", created_at: new Date(), avatar_url: "https://github.com/jhonnzz.png", updated_at: new Date(), banner_url: "https://github.com/diego3g.png"  } }
-              content="Not really."
-              createdAt={new Date()}
-              updatedAt={new Date()}
-              likesAmount={12}
-            />
+            { commentList.map(comment => (
+              <Comment
+                key={ comment.id }
+                id={ comment.id }
+                author={ comment.author }
+                content={ comment.content }
+                createdAt={ comment.created_at }
+                updatedAt={ comment.updated_at }
+                likesAmount={ comment.likes_amount }
+              />
+            )) }
           </CommentsWrapper>
 
           <footer>

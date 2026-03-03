@@ -6,12 +6,13 @@ interface EngagementPanelProps {
   likesAmount: number
   commentsAmount: number
   onLikePost: () => void
+  onOpenComments: () => void
 }
 
-export function EngagementPanel({ isPostLiked, likesAmount, commentsAmount, onLikePost }: EngagementPanelProps) {
+export function EngagementPanel({ isPostLiked, likesAmount, commentsAmount, onLikePost, onOpenComments }: EngagementPanelProps) {
   return (
     <StyledEngagementPanel>
-      <PostActions onLikePost={ onLikePost } isPostLiked={ isPostLiked } />
+      <PostActions onLikePost={ onLikePost } onOpenComments={ onOpenComments } isPostLiked={ isPostLiked } />
 
       <EngagementPanelDisplay>
         <span>

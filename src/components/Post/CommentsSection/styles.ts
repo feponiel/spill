@@ -65,7 +65,7 @@ export const CommentForm = styled.form`
     }
 
     &:focus-within button {
-      display: block;
+      display: flex;
     }
 
     textarea {
@@ -86,15 +86,19 @@ export const CommentForm = styled.form`
 
 export const SubmitCommentButton = styled.button`
   ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: ${theme.space[4]};
-    padding: ${theme.space[3]} ${theme.space[5]};
+    width: 5rem;
+    height: 2.5rem;
     font-weight: bold;
     color: ${theme.colors.white};
     background: ${theme.colors.accentColor};
     border: none;
     border-radius: ${theme.radius.md};
     cursor: pointer;
-    transition: background-color .1s;
+    transition: .2s;
 
     &:disabled {
       opacity: .7;

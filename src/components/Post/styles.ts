@@ -62,7 +62,7 @@ export const EditionWarn = styled.span`
   `}
 `
 
-export const Content = styled.p`
+export const Content = styled.div`
   ${({ theme }) => css`
     margin-top: ${theme.space[6]};
     line-height: ${theme.lineHeights.base};

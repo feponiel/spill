@@ -13,6 +13,7 @@ import { EngagementPanel } from "./EngagementPanel"
 import { CommentSection } from "./CommentsSection"
 import { ContentWrapper } from "./ContentWrapper"
 import { api } from "@/lib/axios"
+import { Comment as CommentType } from "@prisma/client"
 
 interface Author {
   name: string
@@ -33,7 +34,22 @@ interface PostProps {
   handleDelete: () => void
 }
 
+type CommentWithEssentialInfo = CommentType & {
+  likes_amount: number
+  is_liked: boolean
+
+  author: {
+    name: string
+    synthesis: string
+    avatar_url: string
+  }
+}
+
 export function Post({ id, author, content, likesAmount, commentsAmount, publishedAt, updatedAt, isLiked, amITheAuthor, handleDelete }: PostProps) {
+  publishedAt = new Date(publishedAt)
+  updatedAt = new Date(updatedAt)
+
+  const [comments, setComments] = useState<CommentWithEssentialInfo[]>([])
   const [isEdited, setIsEdited] = useState(updatedAt > publishedAt)
   const [postContent, setPostContent] = useState(content)
   const [postLikesAmount, setPostLikesAmount] = useState(likesAmount)
@@ -60,6 +76,18 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
 
       setPostLikesAmount(prev => prev + 1)
       setPostLiked(true)
+    }
+  }
+
+  async function fetchComments() {
+    const { data: commentList } = await api.get(`/posts/${id}/comments`)
+
+    setComments(commentList)
+  }
+
+  async function handleOpenComments() {
+    if (comments.length == 0) {
+      fetchComments()
     }
   }
 
@@ -119,9 +147,9 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
       </Content>
 
       <Collapsible.Root open={ isCommentSectionOpen } onOpenChange={ setCommentSectionOpen }>
-        <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ commentsAmount } onLikePost={ handleLikePost } />
+        <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ commentsAmount } onLikePost={ handleLikePost } onOpenComments={ handleOpenComments } />
 
-        <CommentSection />
+        <CommentSection postId={ id } commentList={ comments } onCreateNewComment={ fetchComments } />
       </Collapsible.Root>
 
       <EditPostModal defaultPostContentValue={ postContent } isOpen={ isEditPostModalOpen } postId={id} handleToggleOpen={ setEditPostModalOpen } handleEditPost={ handleEditPost } />

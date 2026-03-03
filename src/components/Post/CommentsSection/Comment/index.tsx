@@ -1,5 +1,4 @@
 import { ClockIcon, DotsThreeIcon, HeartIcon, PencilIcon } from '@phosphor-icons/react'
-import { User } from "@prisma/client"
 import { CommentAuthorAndTime, CommentContent, CommentOptionsMenuButton, CommentWrapper, EditionWarn, LikeButton, StyledComment } from "./styles"
 import { Avatar } from "../../../Avatar"
 import unknownUser from "@/../public/unknown-user.png"
@@ -9,9 +8,15 @@ import { useState } from 'react'
 import { DeleteCommentModal } from './DeleteCommentModal'
 import { EditCommentModal } from './EditCommentModal'
 
+interface CommentAuthor {
+  name: string
+  synthesis: string
+  avatar_url: string
+}
+
 interface CommentProps {
   id: string
-  author: User
+  author: CommentAuthor
   content: string
   createdAt: Date
   updatedAt: Date
@@ -19,8 +24,12 @@ interface CommentProps {
 }
 
 export function Comment({ id, author, content, createdAt, updatedAt, likesAmount }: CommentProps) {
+  createdAt = new Date(createdAt)
+  updatedAt = new Date(updatedAt)
+
+  const [isEdited, setIsEdited] = useState(updatedAt > createdAt)
   const [commentLikesAmount, setCommentLikesAmount] = useState(likesAmount)
-  const [isCommentLiked, setCommentLiked] = useState(false) // it'll come from a table in the db that makes the relation between the user id and the comment id (Comment Likes)
+  const [isCommentLiked, setCommentLiked] = useState(false)
   const [isCommentOptionsMenuOpen, setCommentOptionsMenuOpen] = useState(false)
   const [isEditCommentModalOpen, setEditCommentModalOpen] = useState(false)
   const [isDeleteCommentModalOpen, setDeleteCommentModalOpen] = useState(false)
@@ -29,8 +38,6 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
     formatedDate: creationDateFormated,
     formatedDateRelativeToNow: creationDateRelativeToNow 
   } = formatDate(createdAt)
-
-  const isEdited = true //updatedAt > publishedAt
 
   function handleLikeComment() {
     if (isCommentLiked) {
