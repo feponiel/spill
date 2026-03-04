@@ -10,6 +10,6 @@ interface AvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
 
 export function Avatar({ username, url = unknownUser.src, hasBorder = true }: AvatarProps) {
   return (
-    <AvatarPicture src={url} $hasBorder={hasBorder} alt={ `${username}'s avatar picture` } width={64} height={64}></AvatarPicture>
+    <AvatarPicture src={url} $hasBorder={hasBorder} alt={ `${username}'s avatar picture` } width={200} height={200}></AvatarPicture>
   )
 }
