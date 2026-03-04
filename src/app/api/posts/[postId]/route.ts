@@ -3,6 +3,57 @@ import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { authOptions } from "../../auth/[...nextauth]/route"
 
+export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
+  const { postId } = await params
+
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user?.id) {
+    return NextResponse.json(null, { status: 401 })
+  }
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    include: {
+      author: true,
+      postLikes: {
+        where: {
+          user_id: session.user.id
+        },
+      },
+      _count: {
+        select: {
+          postLikes: true,
+          comments: true
+        }
+      }
+    }
+  })
+
+  if (!post) {
+    return NextResponse.json(null, { status: 404 })
+  }
+
+  return NextResponse.json({
+    id: post.id,
+    author_id: post.author_id,
+    content: post.content,
+    created_at: post.created_at,
+    updated_at: post.updated_at,
+    comments_amount: post._count.comments,
+    likes_amount: post._count.postLikes,
+    is_liked: post.postLikes.length > 0,
+
+    author: {
+      name: post.author.name,
+      synthesis: post.author.synthesis,
+      avatar_url: post.author.avatar_url
+    }
+  }, { status: 200 })
+}
+
 export async function PATCH(request: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = await params
   const { content } = await request.json()

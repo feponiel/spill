@@ -61,6 +61,7 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
   const [isPostOptionsMenuOpen, setPostOptionsMenuOpen] = useState(false)
   const [isEditPostModalOpen, setEditPostModalOpen] = useState(false)
   const [isDeletePostModalOpen, setDeletePostModalOpen] = useState(false)
+  const [isPostLinkCopied, setPostLinkCopied] = useState(false)
 
   const {
     formatedDate: postDateFormated,
@@ -138,6 +139,14 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
     handleDelete()
     setDeletePostModalOpen(false)
   }
+  
+  async function handleCopyLink() {
+    await navigator.clipboard.writeText(`${window.location.origin}/post/${id}`)
+
+    setPostLinkCopied(true)
+
+    setTimeout(() => setPostLinkCopied(false), 2000)
+  }
 
   return (
     <StyledPost>
@@ -165,10 +174,12 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
             </PostOptionsMenuButton>
           }
           amITheAuthor={ amITheAuthor }
+          isPostLinkCopied={ isPostLinkCopied }
           isOpen={ isPostOptionsMenuOpen }
           handleToggleMenu={ setPostOptionsMenuOpen }
           handleChooseEditOption={ () => setEditPostModalOpen(true) }
           handleChooseDeleteOption={ () => setDeletePostModalOpen(true) }
+          handleChooseCopyLinkOption={ handleCopyLink }
         />
       </header>
 
