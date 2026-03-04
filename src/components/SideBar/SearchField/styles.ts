@@ -36,7 +36,7 @@ export const SearchFieldInput = styled.input`
   `}
 `
 
-export const SearchFieldButton = styled.button`
+export const SearchFieldIcon = styled.label`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
@@ -45,18 +45,12 @@ export const SearchFieldButton = styled.button`
     height: 45px;
     line-height: 0;
     color: ${theme.colors.shade100};
-    background: ${theme.colors.shade600};
+    background: ${theme.colors.shade800};
     border: none;
     border-top-right-radius: inherit;
     border-bottom-right-radius: inherit;
     outline: none;
-    cursor: pointer;
     transition: .2s;
-    
-    &:hover,
-    &:focus-within {
-      background-color: ${theme.colors.accentColorDark};
-    }
 
     svg {
       font-size: ${theme.fontSizes.md};

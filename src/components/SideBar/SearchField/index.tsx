@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { SearchFieldButton, SearchFieldInput, SearchFieldWrapper, StyledSearchField } from "./styles";
+import { SearchFieldIcon, SearchFieldInput, SearchFieldWrapper, StyledSearchField } from "./styles";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { SearchResult } from "./SearchResult";
 import * as Collapsible from "@radix-ui/react-collapsible"
@@ -32,10 +32,10 @@ export function SearchField() {
   return (
     <StyledSearchField ref={containerRef}>
       <SearchFieldWrapper>
-        <SearchFieldInput onChange={ handleSearch } value={ query } onFocus={ () => setSearchResultOpen(true) } />
-        <SearchFieldButton>
+        <SearchFieldInput id="search-field" onChange={ handleSearch } value={ query } onFocus={ () => setSearchResultOpen(true) } />
+        <SearchFieldIcon htmlFor="search-field">
           <MagnifyingGlassIcon />
-        </SearchFieldButton>
+        </SearchFieldIcon>
       </SearchFieldWrapper>
       
       <Collapsible.Root open={ isSearchResultOpen }>
