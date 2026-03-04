@@ -1,46 +1,25 @@
 "use client"
 
 import { Post } from "@/components/Post"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { CreatePostButton, NoPostsMessage, StyledPostsContainer } from "./styles"
 import { PlusIcon } from "@phosphor-icons/react"
 import { CreatePostModal } from "@/components/CreatePostModal"
 import { Title } from "@/styles/global"
-import { Post as PostType } from "@prisma/client"
-import { api } from "@/lib/axios"
 import { useAuthUser } from "@/hooks/useAuthUser"
 import { LoadingWheel } from "../LoadingWheel"
+import { PostWithEssentialInfo } from "@/@types/post-with-essential-info"
 
-type PostWithEssentialInfo = PostType & {
-  comments_amount: number
-  likes_amount: number
-  is_liked: boolean
-
-  author: {
-    name: string
-    synthesis: string
-    avatar_url: string
-  }
+interface PostsContainerProps {
+  posts: PostWithEssentialInfo[]
+  setPosts: Dispatch<SetStateAction<PostWithEssentialInfo[]>>
+  username?: string
+  topic?: string
 }
 
-export function PostsContainer() {
+export function PostsContainer({ posts, setPosts, username, topic }: PostsContainerProps) {
   const { data: authUser, isLoading } = useAuthUser()
-  const [posts, setPosts] = useState<PostWithEssentialInfo[]>([])
   const [isCreatePostModalOpen, setCreatePostModalOpen] = useState(false)
-
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const response = await api.get<PostWithEssentialInfo[]>("/posts")
-
-        setPosts(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchPosts()
-  }, [])
 
   function handleDeletePost(postId: string) {
     setPosts(prev => prev.filter(post => post.id !== postId))
@@ -56,10 +35,23 @@ export function PostsContainer() {
 
   return (
     <StyledPostsContainer>
-      <header>
-        <Title $level={2} $size="md">Posts related to #java</Title>
-        <p>See what people is talking about #java</p>
-      </header>
+      { (username || topic) && (
+        <header>
+          { username && (
+            <>
+              <Title $level={2} $size="md">{username}'s Posts</Title>
+              <p>See the most recent pieces of work from {username}</p>
+            </>
+          ) }
+
+          { topic && (
+            <>
+              <Title $level={2} $size="md">Posts related to #{topic}</Title>
+              <p>See what people are talking about #{topic}</p>
+            </>
+          ) }
+        </header>
+      ) }
 
       <main>
         {

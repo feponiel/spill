@@ -9,8 +9,12 @@ export const SearchResultTagLink = styled(Link)`
     align-items: center;
     justify-content: space-between;
     gap: ${theme.space[3]};
-    padding: ${theme.space[3]} ${theme.space[1]};
+    padding: ${theme.space[3]} ${theme.space[2]};
     text-decoration: none;
+
+    &:hover {
+      background: ${theme.colors.shade700};
+    }
 
     strong {
       display: block;

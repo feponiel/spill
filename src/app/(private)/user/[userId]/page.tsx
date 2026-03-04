@@ -1,43 +1,24 @@
-import { SideBar } from "@/components/SideBar/ProfileCard";
 import { Metadata } from "next";
-import { Banner, Container, UserProfileDisplay, UserProfileInfo, UserProfilePresentation, UserShowcase } from "./styles";
-import { PostsContainer } from "@/components/PostsContainer";
-import { Avatar } from "@/components/Avatar";
+import { Container } from "./styles";
+import { Sidebar } from "@/components/SideBar";
+import { UserShowcase } from "./UserShowcase";
 
 export const metadata: Metadata = {
   title: "Feed"
 }
 
-export default function UserProfile({
-  params: { userId },
+export default async function UserProfile({
+  params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>
 }) {
+  const { userId } = await params
 
   return (
     <Container>
-      <SideBar />
+      <Sidebar />
 
-      <UserShowcase>
-        <UserProfileInfo>
-          <header>
-            <Banner>
-              { /* user.banner_url && <Image src={ user.banner_url } alt={`${ user.name }'s banner image`} /> */ }
-            </Banner>
-          </header>
-          
-          <UserProfileDisplay>
-            <Avatar username="Felipe Elias" url="https://github.com/feponiel.png" />
-
-            <UserProfilePresentation>
-              <strong>Felipe Elias</strong>
-              <span>Java Developer</span>
-            </UserProfilePresentation>
-          </UserProfileDisplay>
-        </UserProfileInfo>
-
-        <PostsContainer />
-      </UserShowcase>
+      <UserShowcase userId={ userId } />
     </Container>
   )
 }

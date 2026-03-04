@@ -1,33 +1,45 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { SearchFieldButton, SearchFieldInput, SearchFieldWrapper, StyledSearchField } from "./styles";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { SearchResult } from "./SearchResult";
 import * as Collapsible from "@radix-ui/react-collapsible"
+import { useDebounce } from "@/hooks/useDebounce";
 
 export function SearchField() {
+  const [query, setQuery] = useState("")
   const [isSearchResultOpen, setSearchResultOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<"users" | "topics">("users")
 
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const debouncedQuery = useDebounce(query, 300)
+  
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value
-
-    if (value.length > 0) {
-      setSearchResultOpen(true)
-    } else {
-      setSearchResultOpen(false)
-    }
+    setQuery(event.target.value)
   }
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setSearchResultOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
   return (
-    <StyledSearchField>
+    <StyledSearchField ref={containerRef}>
       <SearchFieldWrapper>
-        <SearchFieldInput onChange={ (event) => handleSearch(event) } />
+        <SearchFieldInput onChange={ handleSearch } value={ query } onFocus={ () => setSearchResultOpen(true) } />
         <SearchFieldButton>
           <MagnifyingGlassIcon />
         </SearchFieldButton>
       </SearchFieldWrapper>
       
       <Collapsible.Root open={ isSearchResultOpen }>
-        <SearchResult />
+        <SearchResult query={ debouncedQuery } activeTab={ activeTab } onChangeTab={ setActiveTab } />
       </Collapsible.Root>
     </StyledSearchField>
   )

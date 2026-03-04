@@ -8,12 +8,17 @@ export const SearchResultUserLink = styled(Link)`
     display: flex;
     align-items: center;
     gap: ${theme.space[3]};
-    padding: ${theme.space[3]} 0;
+    padding: ${theme.space[3]} ${theme.space[2]};
     text-decoration: none;
+    transition: .2s;
 
     > img {
       width: 3rem;
       height: 3rem;
+    }
+
+    &:hover {
+      background: ${theme.colors.shade700};
     }
   `}
 `

@@ -23,7 +23,6 @@ export const StyledSearchResult = styled(CollapsibleContent)`
 export const SearchResultContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
-    padding: ${theme.space[4]} ${theme.space[2]};
     border: 1px solid ${theme.colors.shade600};
     border-radius: ${theme.radius.lg};
     background: ${theme.colors.shade800};
@@ -35,7 +34,7 @@ export const SearchResultHeader = styled.header`
   ${({ theme }) => css`
     display: flex;
     gap: ${theme.space[2]};
-    padding-bottom: ${theme.space[3]};
+    padding: ${theme.space[4]} ${theme.space[2]} ${theme.space[3]};
     border-bottom: 1px solid ${theme.colors.shade600};
 
     button {
@@ -74,12 +73,19 @@ export const SearchResultsWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
+  justify-content: center;
+  min-height: 50px;
+
+  &.loading {
+    flex-direction: row;
+    align-items: center;
+  }
 `
 
 export const NoResultsMessage = styled.p`
   ${({ theme }) => css`
-    padding: ${theme.space[4]} 0;
     font-size: ${theme.fontSizes["sm"]};
     color: ${theme.colors.shade400};
+    padding: 0 ${theme.space[2]};
   `}
 `

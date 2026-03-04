@@ -8,6 +8,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingWheel } from "../LoadingWheel";
+import { useRouter, usePathname } from "next/navigation"
 
 const createPostFormSchema = z.object({
   content: z
@@ -29,14 +30,21 @@ export function CreatePostModal({ isOpen, handleToggleOpen }: CreatePostModalPro
     resolver: zodResolver(createPostFormSchema)
   })
 
+  const router = useRouter()
+  const pathname = usePathname()
+
   async function handleCreatePost(formData: createPostFormData) {
     const { content } = formData
 
-    const post = await api.post('/posts', {
+    await api.post('/posts', {
       content,
     })
 
-    window.location.reload()
+    if (pathname === "/") {
+      window.location.reload()
+    } else {
+      router.push("/")
+    }
   }
 
   return (

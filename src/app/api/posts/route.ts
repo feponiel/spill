@@ -56,7 +56,10 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(post, { status: 201 })
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const tag = searchParams.get("tag")
+
   const session = await getServerSession(authOptions)
   
   if (!session?.user?.id) {
@@ -64,6 +67,14 @@ export async function GET() {
   }
 
   const posts = await prisma.post.findMany({
+    where: tag ? {
+      postTags: {
+        some: {
+          tag: { name: tag }
+        }
+      }
+    } : undefined,
+
     orderBy: {
       created_at: "desc"
     },

@@ -12,7 +12,7 @@ export function SearchResultUser({ name, synthesis, avatar_url, profile_url }: S
   return (
     <StyledSearchResultUser>
       <SearchResultUserLink href={ profile_url }>
-        <Avatar username="Felipe Elias" src={ avatar_url } hasBorder={false} />
+        <Avatar username={ name } url={ avatar_url } hasBorder={false} />
 
         <UserInfo>
           <strong>{ name }</strong>

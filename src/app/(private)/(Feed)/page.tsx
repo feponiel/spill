@@ -1,7 +1,7 @@
 import { Container } from "./styles";
 import { Metadata } from "next";
-import { PostsContainer } from "../../../components/PostsContainer";
 import { Sidebar } from "@/components/SideBar";
+import { FeedPosts } from "./FeedPosts";
 
 export const metadata: Metadata = {
   title: "Feed"
@@ -12,7 +12,7 @@ export default function Feed() {
     <Container>
       <Sidebar />
 
-      <PostsContainer />
+      <FeedPosts />
     </Container>
   )
 }

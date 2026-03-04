@@ -32,7 +32,8 @@ export const StyledProfileCard = styled.div`
 export const Banner = styled.div`
   ${({ theme }) => css`
     width: 100%;
-    height: 72px;
+    height: auto;
+    aspect-ratio: 16/5;
     background-color: ${theme.colors.shade300};
     background-position: center;
     background-size: cover;
