@@ -48,7 +48,7 @@ export function ContentWrapper({ children }: ContentWrapperProps) {
               return child.split(/(\s+)/).map((part, i) => {
                 if (/^#\w+/.test(part)) {
                   const tag = part.slice(1)
-                  return <Tag key={i} href={`/posts?tag=${tag}`}>{part}</Tag>
+                  return <Tag key={i} href={`/?tag=${tag}`}>{part}</Tag>
                 }
                 return part
               })

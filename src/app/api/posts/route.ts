@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   }
 
   const tags = [...new Set<string>(
-    content.match(/#(\w+)/g)?.map((tag: string) => tag.slice(1)) ?? []
+    content.match(/#(\w+)/g)?.map((tag: string) => tag.slice(1).toLowerCase()) ?? []
   )]
 
   const post = await prisma.$transaction(async (transaction) => {
