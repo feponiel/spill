@@ -44,13 +44,13 @@ export const lightTheme: Theme = {
     accentColor: '#c9b458',
     accentColorDark: '#8e7f3a',
 
-    shade100: '#1a191c', // escuro, para textos importantes
+    shade100: '#1a191c',
     shade300: '#4b484f', 
     shade400: '#716d78', 
-    shade600: '#c9c8c7', // suavizado, mas ainda mais escuro que shade700
+    shade600: '#c9c8c7',
     shade700: '#d2cecf', 
     shade800: '#e1dddc', 
-    shade900: '#f4f2ee', // off-white levemente amarelado
+    shade900: '#f4f2ee',
 
     red500: '#f75a78',
   },
