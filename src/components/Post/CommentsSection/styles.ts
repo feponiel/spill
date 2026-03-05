@@ -34,7 +34,6 @@ export const CommentsSectionWrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    gap: ${theme.space[6]};
     margin-top: ${theme.space[7]};
   `}
 `
@@ -116,6 +115,10 @@ export const CommentList = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${theme.space[7]};
+
+    &.with-comments {
+      margin-top: ${theme.space[10]};
+    }
   `}
 `
 

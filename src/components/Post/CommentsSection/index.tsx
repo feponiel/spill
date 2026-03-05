@@ -81,7 +81,7 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
           </CommentForm>
         </CommentArea>
 
-        <CommentList>
+        <CommentList className={commentList.length > 0 ? "with-comments" : ""}>
           <CommentsWrapper>
             { commentList.map(comment => (
               <Comment
@@ -99,14 +99,15 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
             )) }
           </CommentsWrapper>
 
-          <footer>
-            {hasMore && (
+
+          {hasMore && (
+            <footer>
               <ViewMoreButton onClick={onViewMore}>
                 <ArrowDownIcon weight="bold" />
                 View more comments
               </ViewMoreButton>
-            )}
-          </footer>
+            </footer>
+          )}
         </CommentList>
       </CommentsSectionWrapper>
     </StyledCommentsSection>
