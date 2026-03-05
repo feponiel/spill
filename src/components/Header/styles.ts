@@ -12,5 +12,9 @@ export const StyledHeader = styled.header`
     position: fixed;
     background: ${theme.colors.shade800};
     z-index: 1;
+
+    a {
+      text-decoration: none;
+    }
   `}
 `

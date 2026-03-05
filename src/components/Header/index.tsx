@@ -4,7 +4,9 @@ import { StyledHeader } from "./styles";
 export function Header() {
   return (
     <StyledHeader>
-      <Logo size="sm" />
+      <a href="/">
+        <Logo size="sm" />
+      </a>
     </StyledHeader>
   )
 }
