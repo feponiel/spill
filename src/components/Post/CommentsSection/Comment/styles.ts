@@ -9,6 +9,10 @@ export const StyledComment = styled.li`
       width: 3rem;
       height: 3rem;
     }
+
+    a {
+      text-decoration: none;
+    }
   `}
 `
 
@@ -50,6 +54,7 @@ export const CommentAuthorAndTime = styled.div`
       display: block;
       line-height: ${theme.lineHeights.base};
       font-size: ${theme.fontSizes.sm};
+      color: ${theme.colors.shade300};
     }
 
     span {

@@ -59,7 +59,7 @@ export function PostsContainer({ posts, setPosts, username, topic }: PostsContai
             posts.map(post => (
               <Post
                 id={ post.id }
-                author={ {name: post.author.name, synthesis: post.author.synthesis, avatar_url: post.author.avatar_url} }
+                author={ {id: post.author_id, name: post.author.name, synthesis: post.author.synthesis, avatar_url: post.author.avatar_url} }
                 content={ post.content }
                 likesAmount={ post.likes_amount }
                 commentsAmount={ post.comments_amount }

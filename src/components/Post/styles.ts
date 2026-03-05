@@ -19,9 +19,15 @@ export const StyledPost = styled.article`
 `
 
 export const InfoDisplay = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    gap: ${theme.space[4]};
+
+    a {
+      text-decoration: none;
+    }
+  `}
 `
 
 export const Info = styled.div`

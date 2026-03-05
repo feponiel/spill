@@ -1,4 +1,5 @@
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import Link from "next/link";
 import styled, { css } from "styled-components";
 
 export const StyledProfileCard = styled.div`
@@ -59,9 +60,10 @@ export const ProfileSummary = styled.div`
   `}
 `
 
-export const ProfilePresentation = styled.div`
+export const ProfilePresentation = styled(Link)`
   display: flex;
   flex-direction: column;
+  text-decoration: none;
 
   ${({ theme }) => css`
     strong {

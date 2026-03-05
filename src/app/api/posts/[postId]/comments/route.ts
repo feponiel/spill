@@ -43,6 +43,7 @@ export async function POST(request: NextRequest, { params }: { params: { postId:
     updated_at: comment.updated_at,
     likes_amount: 0,
     is_liked: false,
+
     author: {
       name: comment.author.name,
       synthesis: comment.author.synthesis,
@@ -150,6 +151,7 @@ export async function GET(
       updated_at: comment.updated_at,
       likes_amount: comment._count.commentLikes,
       is_liked: comment.commentLikes.length > 0,
+
       author: {
         name: comment.author.name,
         synthesis: comment.author.synthesis,

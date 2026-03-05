@@ -3,13 +3,13 @@ import { CommentArea, CommentForm, CommentList, CommentsSectionWrapper, Comments
 import { FormField } from "@/components/FormField";
 import { Comment } from "./Comment";
 import { ArrowDownIcon } from "@phosphor-icons/react";
-import { Comment as CommentType } from "@prisma/client";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { LoadingWheel } from "@/components/LoadingWheel";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { api } from "@/lib/axios";
+import { CommentWithEssentialInfo } from "@/@types/comment-with-essential-info";
 
 const createNewCommentFormSchema = z.object({
   content: z
@@ -20,17 +20,6 @@ const createNewCommentFormSchema = z.object({
 })
 
 type createNewCommentFormData = z.infer<typeof createNewCommentFormSchema>
-
-type CommentWithEssentialInfo = CommentType & {
-  likes_amount: number
-  is_liked: boolean
-
-  author: {
-    name: string
-    synthesis: string
-    avatar_url: string
-  }
-}
 
 interface CommentSectionProps {
   postId: string
@@ -87,7 +76,7 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
               <Comment
                 key={ comment.id }
                 id={ comment.id }
-                author={ comment.author }
+                author={ { id: comment.author_id, name: comment.author.name, synthesis: comment.author.synthesis, avatar_url: comment.author.avatar_url } }
                 content={ comment.content }
                 createdAt={ comment.created_at }
                 updatedAt={ comment.updated_at }

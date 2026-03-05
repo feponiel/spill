@@ -12,6 +12,7 @@ import { SettingsMenu } from "./SettingsMenu";
 import { DeleteAccountModal } from "./DeleteAccountModal";
 import { SignOutModal } from "./SignOutModal";
 import { useTheme } from "@/hooks/useTheme";
+import Link from "next/link";
 
 export function ProfileCard() {
   const { data: authUser, isLoading } = useAuthUser()
@@ -45,10 +46,12 @@ export function ProfileCard() {
       </header>
 
       <ProfileDisplay>
-        <Avatar username={ authUser.name } url={ authUser.avatar_url ?? undefined } />
+        <Link href={ `/user/${authUser.id}` }>
+          <Avatar username={ authUser.name } url={ authUser.avatar_url ?? undefined } />
+        </Link>
         
         <ProfileSummary>
-          <ProfilePresentation>
+          <ProfilePresentation href={ `/user/${authUser.id}` }>
             <strong>{ authUser.name }</strong>
             <span>{ synthesis }</span>
           </ProfilePresentation>

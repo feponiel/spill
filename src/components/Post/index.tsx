@@ -13,9 +13,11 @@ import { EngagementPanel } from "./EngagementPanel"
 import { CommentSection } from "./CommentsSection"
 import { ContentWrapper } from "./ContentWrapper"
 import { api } from "@/lib/axios"
-import { Comment as CommentType } from "@prisma/client"
+import Link from "next/link"
+import { CommentWithEssentialInfo } from "@/@types/comment-with-essential-info"
 
 interface Author {
+  id: string
   name: string
   synthesis?: string
   avatar_url?: string
@@ -32,17 +34,6 @@ interface PostProps {
   isLiked: boolean
   amITheAuthor: boolean
   handleDelete: () => void
-}
-
-type CommentWithEssentialInfo = CommentType & {
-  likes_amount: number
-  is_liked: boolean
-
-  author: {
-    name: string
-    synthesis: string
-    avatar_url: string
-  }
 }
 
 export function Post({ id, author, content, likesAmount, commentsAmount, publishedAt, updatedAt, isLiked, amITheAuthor, handleDelete }: PostProps) {
@@ -150,13 +141,17 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
     <StyledPost>
       <header>
         <InfoDisplay>
-          <Avatar username={ author.name } url={ author.avatar_url } />
+          <Link href={ `/user/${author.id}` }>
+            <Avatar username={ author.name } url={ author.avatar_url } />
+          </Link>
           
           <Info>
-            <strong>{ author.name }</strong>
-            { author.synthesis &&
-              <span>{ author.synthesis }</span>
-            }
+            <Link href={ `/user/${author.id}` }>
+              <strong>{ author.name }</strong>
+              { author.synthesis &&
+                <span>{ author.synthesis }</span>
+              }
+            </Link>
             <PostDate title={ postDateFormated } dateTime={ publishedAt.toISOString() }>
               <ClockIcon size={16} />
 

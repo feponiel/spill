@@ -8,8 +8,10 @@ import { useState } from 'react'
 import { DeleteCommentModal } from './DeleteCommentModal'
 import { EditCommentModal } from './EditCommentModal'
 import { api } from '@/lib/axios'
+import Link from 'next/link'
 
 interface CommentAuthor {
+  id: string
   name: string
   synthesis: string
   avatar_url: string
@@ -71,14 +73,18 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
 
   return (
     <StyledComment>
-      <Avatar username={ author.name } url={ author.avatar_url ?? unknownUser.src } hasBorder={false} />
+      <Link href={ `/user/${author.id}` }>
+        <Avatar username={ author.name } url={ author.avatar_url ?? unknownUser.src } hasBorder={false} />
+      </Link>
 
       <CommentWrapper>
         <CommentContent>
           <header>
             <CommentAuthorAndTime>
-              <strong>{ author.name }</strong>
-              <span>{ author.synthesis }</span>
+              <Link href={ `/user/${author.id}` }>
+                <strong>{ author.name }</strong>
+                <span>{ author.synthesis }</span>
+              </Link>
               <time title={creationDateFormated} dateTime={createdAt.toISOString()}>
                 <ClockIcon size={ 15 } />
                 { creationDateRelativeToNow }
