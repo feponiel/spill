@@ -32,7 +32,7 @@ export function SearchField() {
   return (
     <StyledSearchField ref={containerRef}>
       <SearchFieldWrapper>
-        <SearchFieldInput id="search-field" onChange={ handleSearch } value={ query } onFocus={ () => setSearchResultOpen(true) } />
+        <SearchFieldInput id="search-field" onChange={ handleSearch } value={ query } onFocus={ () => setSearchResultOpen(true) } autoComplete="off" />
         <SearchFieldIcon htmlFor="search-field">
           <MagnifyingGlassIcon />
         </SearchFieldIcon>
