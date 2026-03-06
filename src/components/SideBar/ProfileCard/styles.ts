@@ -48,6 +48,10 @@ export const ProfileDisplay = styled.div`
     flex-direction: column;
     margin-top: calc(0px - ${theme.space[6]} - 6px);
     padding: 0 ${theme.space[4]};
+
+    > a {
+      align-self: flex-start;
+    }
   `}
 `
 
