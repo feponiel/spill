@@ -153,7 +153,7 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
               }
             </Link>
             <PostDate title={ postDateFormated } dateTime={ publishedAt.toISOString() }>
-              <ClockIcon size={16} />
+              <ClockIcon />
 
               { postDateRelativeToNow }
             </PostDate>
@@ -163,7 +163,7 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
         <PostOptionsMenu
           trigger={
             <PostOptionsMenuButton title="Post options">
-              <DotsThreeIcon size={24} />
+              <DotsThreeIcon />
             </PostOptionsMenuButton>
           }
           amITheAuthor={ amITheAuthor }
@@ -179,15 +179,23 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
       <Content>
         {isEdited && (
           <EditionWarn>
-            <PencilIcon size={16} />
-            Edited by the author
+            <PencilIcon />
+            Edited
           </EditionWarn>
         )}
         
         <ContentWrapper>{ postContent }</ContentWrapper>
       </Content>
 
-      <Collapsible.Root open={ isCommentSectionOpen } onOpenChange={ setCommentSectionOpen }>
+      <Collapsible.Root 
+        open={isCommentSectionOpen} 
+        onOpenChange={async (open) => {
+          if (open && comments.length === 0) {
+            await handleOpenComments()
+          }
+          setCommentSectionOpen(open)
+        }}
+      >
         <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ postCommentsAmount } onLikePost={ handleLikePost } onOpenComments={ handleOpenComments } />
 
         <CommentSection 

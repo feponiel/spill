@@ -7,9 +7,12 @@ interface DropdownMenuProps {
   isOpen: boolean
   onToggleOpen: (open: boolean) => void
   children?: ReactNode
+  className?: string
 }
 
-export function DropdownMenu({ trigger, isOpen, onToggleOpen, children }: DropdownMenuProps) {
+export { DropdownSubContent } from "./styles"
+
+export function DropdownMenu({ trigger, isOpen, onToggleOpen, children, className }: DropdownMenuProps) {
   return (
     <Dropdown.Root open={ isOpen } onOpenChange={ onToggleOpen }>
       <Dropdown.Trigger asChild>
@@ -17,7 +20,7 @@ export function DropdownMenu({ trigger, isOpen, onToggleOpen, children }: Dropdo
       </Dropdown.Trigger>
 
       <Dropdown.Portal>
-        <DropdownContent>
+        <DropdownContent className={ className }>
           { children }
         </DropdownContent>
       </Dropdown.Portal>

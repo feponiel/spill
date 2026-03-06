@@ -14,6 +14,7 @@ export const StyledFormField = styled.label`
 
     > input,
     > textarea {
+      font-size: ${theme.fontSizes.sm};
       color: ${theme.colors.shade100};
       padding: 7px;
       background: ${theme.colors.shade900};

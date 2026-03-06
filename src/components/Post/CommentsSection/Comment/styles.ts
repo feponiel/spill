@@ -26,7 +26,7 @@ export const CommentWrapper = styled.div`
   `}
 `
 
-export const CommentContent = styled.div`
+export const CommentContentAndInfo = styled.div`
   ${({ theme }) => css`
     padding: ${theme.space[4]};
     background: ${theme.colors.shade700};
@@ -38,13 +38,15 @@ export const CommentContent = styled.div`
       align-items: flex-start;
       justify-content: space-between;
     }
+  `}
+`
 
-    p {
-      margin-top: ${theme.space[4]};
-      line-height: ${theme.lineHeights.base};
-      font-size: ${theme.fontSizes.sm};
-      color: ${theme.colors.shade300};
-    }
+export const CommentContent = styled.p`
+  ${({ theme }) => css`
+    margin-top: ${theme.space[4]};
+    line-height: ${theme.lineHeights.base};
+    font-size: ${theme.fontSizes.sm};
+    color: ${theme.colors.shade300};
   `}
 `
 
@@ -71,6 +73,10 @@ export const CommentAuthorAndTime = styled.div`
       margin-top: ${theme.space[1]};
       font-size: ${theme.fontSizes.xxs};
       color: ${theme.colors.shade400};
+
+      svg {
+        font-size: ${theme.fontSizes.sm};
+      }
     }
   `}
 `
@@ -86,6 +92,10 @@ export const CommentOptionsMenuButton = styled.button`
     &:hover {
       color: ${theme.colors.accentColor};
     }
+
+    svg {
+      font-size: ${theme.fontSizes["2xl"]};
+    }
   `}
 `
 
@@ -96,6 +106,10 @@ export const EditionWarn = styled.span`
     gap: ${theme.space[1]};
     font-size: ${theme.fontSizes.xs};
     color: ${theme.colors.shade400};
+
+    svg {
+      font-size: ${theme.fontSizes.md};
+    }
   `}
 `
 
@@ -108,6 +122,7 @@ export const LikeButton = styled.button<LikeButtonProps>`
     display: flex;
     align-items: center;
     line-height: 0;
+    font-size: ${theme.fontSizes.sm};
     color: ${theme.colors.shade400};
     background: none;
     border: none;
@@ -116,7 +131,7 @@ export const LikeButton = styled.button<LikeButtonProps>`
     cursor: pointer;
 
     svg {
-      font-size: ${theme.fontSizes.md};
+      font-size: ${theme.fontSizes.lg};
     }
 
     span {

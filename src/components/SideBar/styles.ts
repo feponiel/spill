@@ -8,5 +8,9 @@ export const StyledSideBar = styled.aside`
     position: sticky;
     top: calc(${theme.space[8]} + ${theme.defaults.headerHeight});
     left: 0;
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
   `}
 `

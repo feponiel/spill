@@ -4,6 +4,7 @@ import StyledComponentsRegistry from '@/lib/styled-components/registry'
 import { Roboto } from 'next/font/google'
 import { ReactQueryProvider } from "@/lib/react-query/react-query-provider";
 import { cookies } from "next/headers";
+import { AuthUserLoader } from "@/components/AuthUserLoader";
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -35,6 +36,7 @@ export default async function RootLayout({
         <ReactQueryProvider>
           <StyledComponentsRegistry>
             <Theme initialTheme={ initialTheme }>
+              <AuthUserLoader />
               {children}
             </Theme>
           </StyledComponentsRegistry>

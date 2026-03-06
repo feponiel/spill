@@ -3,13 +3,13 @@ import { CommentArea, CommentForm, CommentList, CommentsSectionWrapper, Comments
 import { FormField } from "@/components/FormField";
 import { Comment } from "./Comment";
 import { ArrowDownIcon } from "@phosphor-icons/react";
-import { useAuthUser } from "@/hooks/useAuthUser";
 import { LoadingWheel } from "@/components/LoadingWheel";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { api } from "@/lib/axios";
 import { CommentWithEssentialInfo } from "@/@types/comment-with-essential-info";
+import { useAuthUserStore } from "@/store/useAuthUserStore";
 
 const createNewCommentFormSchema = z.object({
   content: z
@@ -34,7 +34,7 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
   const { formState: { isValid, isSubmitting }, handleSubmit, register, reset } = useForm<createNewCommentFormData>({
     resolver: zodResolver(createNewCommentFormSchema)
   })
-  const { data: authUser, isLoading } = useAuthUser()
+  const { user, isLoading } = useAuthUserStore()
 
   async function handleCreateNewComment(formData: createNewCommentFormData) {
     const { content } = formData
@@ -47,10 +47,10 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
     <StyledCommentsSection>
       <CommentsSectionWrapper>
         <CommentArea>
-          { isLoading || !authUser ? (
+          { isLoading || !user ? (
             <LoadingWheel size="sm" />
           ) : (
-            <Avatar username={ authUser.name } url={ authUser.avatar_url } hasBorder={false} />
+            <Avatar username={ user.name } url={ user.avatar_url } hasBorder={false} />
           ) }
 
           <CommentForm onSubmit={ handleSubmit(handleCreateNewComment) }>
@@ -82,7 +82,7 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
                 updatedAt={ comment.updated_at }
                 likesAmount={ comment.likes_amount }
                 isLiked={ comment.is_liked }
-                amITheAuthor = { authUser?.id === comment.author_id }
+                amITheAuthor = { user?.id === comment.author_id }
                 handleDelete={ onDeleteComment }
               />
             )) }

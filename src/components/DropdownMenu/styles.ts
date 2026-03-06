@@ -1,7 +1,7 @@
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenuContent, DropdownMenuSubContent } from "@radix-ui/react-dropdown-menu"
 import styled, { css } from "styled-components"
 
-export const DropdownContent = styled(DropdownMenuContent)`
+const dropdownStyles = css`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -10,6 +10,7 @@ export const DropdownContent = styled(DropdownMenuContent)`
     border: 1px solid ${theme.colors.shade700};
     border-radius: ${theme.radius.md};
     overflow: hidden;
+    z-index: 3;
 
     & > * {
       display: flex;
@@ -31,5 +32,17 @@ export const DropdownContent = styled(DropdownMenuContent)`
         font-size: ${theme.fontSizes.xl};
       }
     }
+
+    @media (max-width: 1024px) {
+      width: 250px;
+    }
   `}
+`
+
+export const DropdownContent = styled(DropdownMenuContent)`
+  ${dropdownStyles}
+`
+
+export const DropdownSubContent = styled(DropdownMenuSubContent)`
+  ${dropdownStyles}
 `

@@ -3,35 +3,26 @@
 import { GearSixIcon, PencilIcon, SignOutIcon } from "@phosphor-icons/react";
 import { Avatar } from "../../Avatar";
 import { Banner, EditProfileButton, ProfileDisplay, ProfilePresentation, ProfileSummary, SettingsMenuButton, SignOutButton, StyledProfileCard } from "./styles";
-import { useAuthUser } from "@/hooks/useAuthUser";
 import { LoadingWheel } from "../../LoadingWheel";
 import * as Dialog from "@radix-ui/react-dialog"
-import { useEffect, useState } from "react";
-import { EditProfileModal } from "./EditProfileModal";
+import { useState } from "react";
+import { EditProfileModal } from "../../EditProfileModal";
 import { SettingsMenu } from "./SettingsMenu";
-import { DeleteAccountModal } from "./DeleteAccountModal";
-import { SignOutModal } from "./SignOutModal";
+import { DeleteAccountModal } from "../../DeleteAccountModal";
+import { SignOutModal } from "../../SignOutModal";
 import { useTheme } from "@/hooks/useTheme";
 import Link from "next/link";
+import { useAuthUserStore } from "@/store/useAuthUserStore";
 
 export function ProfileCard() {
-  const { data: authUser, isLoading } = useAuthUser()
+  const { user, isLoading } = useAuthUserStore()
   const { toggleTheme } = useTheme()
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false)
   const [isSignOutModalOpen, setSignOutModalOpen] = useState(false)
   const [isDeleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
   const [isSettingsMenuOpen, setSettingsMenuOpen] = useState(false)
-  const [synthesis, setSynteshis] = useState(authUser?.synthesis)
-  const [bannerPicture, setBannerPicture] = useState(authUser?.banner_url)
 
-  useEffect(() => {
-    if (authUser) {
-      setSynteshis(authUser.synthesis)
-      setBannerPicture(authUser.banner_url)
-    }
-  }, [authUser])
-
-  if (isLoading || !authUser) {
+  if (isLoading || !user) {
     return (
       <StyledProfileCard className="loading">
         <LoadingWheel size="md" />
@@ -42,18 +33,18 @@ export function ProfileCard() {
   return (
     <StyledProfileCard>
       <header>
-        <Banner style={ { backgroundImage: `url(${bannerPicture})` } }></Banner>
+        <Banner style={ { backgroundImage: `url(${user.banner_url})` } }></Banner>
       </header>
 
       <ProfileDisplay>
-        <Link href={ `/user/${authUser.id}` }>
-          <Avatar username={ authUser.name } url={ authUser.avatar_url ?? undefined } />
+        <Link href={ `/user/${user.id}` }>
+          <Avatar username={ user.name } url={ user.avatar_url ?? undefined } />
         </Link>
         
         <ProfileSummary>
-          <ProfilePresentation href={ `/user/${authUser.id}` }>
-            <strong>{ authUser.name }</strong>
-            <span>{ synthesis }</span>
+          <ProfilePresentation href={ `/user/${user.id}` }>
+            <strong>{ user.name }</strong>
+            <span>{ user.synthesis }</span>
           </ProfilePresentation>
 
           <Dialog.Root open={ isEditProfileModalOpen } onOpenChange={ setEditProfileModalOpen }>
@@ -85,7 +76,7 @@ export function ProfileCard() {
         />
       </footer>
 
-      <EditProfileModal userInfo={ authUser } isOpen={ isEditProfileModalOpen } handleToggleModal={ setEditProfileModalOpen } setSynthesis={setSynteshis} setBannerPicture={setBannerPicture} />
+      <EditProfileModal user={ user } isOpen={ isEditProfileModalOpen } handleToggleModal={ setEditProfileModalOpen } />
       <SignOutModal isOpen={ isSignOutModalOpen } handleToggleModal={ setSignOutModalOpen } />
       <DeleteAccountModal isOpen={ isDeleteAccountModalOpen } handleToggleModal={ setDeleteAccountModalOpen } />
     </StyledProfileCard>

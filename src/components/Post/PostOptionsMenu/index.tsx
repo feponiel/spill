@@ -1,7 +1,7 @@
 import { DropdownMenu } from "@/components/DropdownMenu";
 import { LinkSimpleIcon, PencilIcon, TrashIcon } from "@phosphor-icons/react";
 import * as Dropdown from "@radix-ui/react-dropdown-menu"
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 
 interface PostOptionsMenuProps {
   trigger: ReactElement

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
@@ -8,6 +7,34 @@ export const GlobalStyle = createGlobalStyle`
       padding: 0;
       box-sizing: border-box;
       font-family: ${theme.fonts.default};
+    }
+
+    html {
+      font-size: 16px;
+
+      @media (max-width: 1024px) {
+        font-size: 24px;
+      }
+
+      @media (max-width: 820px) {
+        font-size: 20px;
+      }
+
+      @media (max-width: 630px) {
+        font-size: 18px;
+      }
+
+      @media (max-width: 530px) {
+        font-size: 14px;
+      }
+
+      @media (max-width: 380px) {
+        font-size: 11px;
+      }
+
+      @media (max-height: 600px) {
+        font-size: 16px;
+      }
     }
 
     body {
@@ -23,8 +50,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+      width: ${theme.defaults.scrollBarWidth};
+      height: ${theme.defaults.scrollBarWidth};
     }
 
     ::-webkit-scrollbar-track {
@@ -38,25 +65,6 @@ export const GlobalStyle = createGlobalStyle`
       `}
     }
   `}
-`
-
-export const Container = styled.div`
-  width: 1150px;
-  margin: 0 auto;
-  padding: 0 2%;
-
-  /* '@responsive-desktop-hd': {
-    padding: '0 $6',
-  }, */
-`
-
-export const Overlay = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
 `
 
 interface TitleProps {

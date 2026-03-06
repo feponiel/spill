@@ -54,6 +54,10 @@ export const PostDate = styled.time`
     margin-top: ${theme.space[1]};
     font-size: ${theme.fontSizes.xs};
     color: ${theme.colors.shade400};
+
+    svg {
+      font-size: ${theme.fontSizes.md};
+    }
   `}
 `
 
@@ -65,6 +69,10 @@ export const EditionWarn = styled.span`
     font-size: ${theme.fontSizes.xs};
     color: ${theme.colors.shade400};
     margin-bottom: ${theme.space[1]};
+
+    svg {
+      font-size: ${theme.fontSizes.md};
+    }
   `}
 `
 
@@ -85,6 +93,10 @@ export const PostOptionsMenuButton = styled.button`
     color: ${theme.colors.shade100};
     cursor: pointer;
     transition: .2s;
+
+    svg {
+      font-size: ${theme.fontSizes["2xl"]};
+    }
 
     &:hover {
       color: ${theme.colors.accentColor};

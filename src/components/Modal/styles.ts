@@ -8,6 +8,7 @@ export const DialogOverlay = styled(Dialog.Overlay)`
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, .4);
+  z-index: 9999;
 `
 
 export const DialogContent = styled(Dialog.Content)`
@@ -30,6 +31,14 @@ export const DialogContent = styled(Dialog.Content)`
       justify-content: end;
       width: 100%;
     }
+
+    @media (max-width: 1024px) {
+      width: 75%;
+    }
+
+    @media (max-width: 820px) {
+      width: calc(100% - ${theme.space[8]});
+    }
   `}
 `
 
@@ -47,6 +56,10 @@ export const DialogClose = styled(Dialog.Close)`
     &:hover {
       color: ${theme.colors.red500};
       border: 1px solid ${theme.colors.red500};
+    }
+
+    svg {
+      font-size: ${theme.fontSizes.sm};
     }
   `}
 `

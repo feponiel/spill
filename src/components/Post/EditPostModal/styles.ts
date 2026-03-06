@@ -15,8 +15,9 @@ export const EditPostModalForm = styled.form`
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 52px;
+      height: 3.25rem;
       margin-top: ${theme.space[4]};
+      font-size: ${theme.fontSizes.sm};
       font-weight: bold;
       color: ${theme.colors.white};
       background: ${theme.colors.accentColor};
@@ -27,6 +28,13 @@ export const EditPostModalForm = styled.form`
 
       &:hover {
         background: ${theme.colors.accentColorDark};
+      }
+    }
+
+    @media (max-width: 1024px) {
+      textarea {
+        width: 100%;
+        height: 7rem;
       }
     }
   `}

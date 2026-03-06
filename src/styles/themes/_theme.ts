@@ -2,7 +2,10 @@ export interface Theme {
   name: string
   
   defaults: {
-    headerHeight: string
+    headerHeight: '70px'
+    scrollBarWidth: '5px'
+    containerWidth: '900px'
+    containerGap: '2rem'
   }
 
   fonts: {

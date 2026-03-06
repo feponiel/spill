@@ -5,21 +5,25 @@ export const ModalFooter = styled.footer`
   ${({ theme }) => css`
     display: flex;
     gap: ${theme.space[2]};
+
+    button {
+      margin-top: ${theme.space[4]};
+      padding: ${theme.space[4]} ${theme.space[6]};
+      font-size: ${theme.fontSizes.sm};
+      font-weight: bold;
+      border-radius: ${theme.radius.md};
+      cursor: pointer;
+      transition: background-color .1s;
+      flex: 1;
+    }
   `}
 `
 
 export const CancelButton = styled(DialogClose)`
   ${({ theme }) => css`
-    margin-top: ${theme.space[4]};
-    padding: ${theme.space[4]} ${theme.space[6]};
-    font-weight: bold;
     color: ${theme.colors.white};
     background: ${theme.colors.shade400};
-    border: none;
-    border-radius: ${theme.radius.md};
-    cursor: pointer;
-    transition: background-color .1s;
-    flex: 1;
+    border: 1px solid ${theme.colors.shade400};
 
     &:hover {
       background: ${theme.colors.shade300};
@@ -29,16 +33,9 @@ export const CancelButton = styled(DialogClose)`
 
 export const ConfirmButton = styled.button`
   ${({ theme }) => css`
-    margin-top: ${theme.space[4]};
-    padding: ${theme.space[4]} ${theme.space[6]};
-    font-weight: bold;
     color: ${theme.colors.red500};
-    background: none;
-    border: 2px solid ${theme.colors.red500};
-    border-radius: ${theme.radius.md};
-    cursor: pointer;
-    transition: background-color .1s;
-    flex: 1;
+    background: transparent;
+    border: 1px solid ${theme.colors.red500};
 
     &:hover {
       color: ${theme.colors.white};
@@ -48,5 +45,12 @@ export const ConfirmButton = styled.button`
 `
 
 export const ModalDescription = styled.p`
-  max-width:450px;
+  ${({ theme }) => css`
+    max-width:450px;
+    font-size: ${theme.fontSizes.md};
+
+    @media (max-width: 1024px) {
+      max-width: 100%;
+    }
+  `}
 `

@@ -139,6 +139,7 @@ export const ViewMoreButton = styled.button`
     gap: ${theme.space[1]};
     margin-left: calc(3rem + ${theme.space[4]});
     line-height: 0;
+    font-size: ${theme.fontSizes.xs};
     font-weight: ${theme.fontWeights.bold};
     color: ${theme.colors.accentColorDark};
     background: none;

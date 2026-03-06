@@ -1,5 +1,5 @@
 import { ClockIcon, DotsThreeIcon, HeartIcon, PencilIcon } from '@phosphor-icons/react'
-import { CommentAuthorAndTime, CommentContent, CommentOptionsMenuButton, CommentWrapper, EditionWarn, LikeButton, StyledComment } from "./styles"
+import { CommentAuthorAndTime, CommentContent, CommentContentAndInfo, CommentOptionsMenuButton, CommentWrapper, EditionWarn, LikeButton, StyledComment } from "./styles"
 import { Avatar } from "../../../Avatar"
 import unknownUser from "@/../public/unknown-user.png"
 import { formatDate } from '@/utils/formatDate'
@@ -78,7 +78,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
       </Link>
 
       <CommentWrapper>
-        <CommentContent>
+        <CommentContentAndInfo>
           <header>
             <CommentAuthorAndTime>
               <Link href={ `/user/${author.id}` }>
@@ -86,7 +86,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
                 <span>{ author.synthesis }</span>
               </Link>
               <time title={creationDateFormated} dateTime={createdAt.toISOString()}>
-                <ClockIcon size={ 15 } />
+                <ClockIcon />
                 { creationDateRelativeToNow }
               </time>
             </CommentAuthorAndTime>
@@ -94,7 +94,7 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
             <CommentOptionsMenu
               trigger={
                 <CommentOptionsMenuButton title="Comment options">
-                  <DotsThreeIcon size={24} />
+                  <DotsThreeIcon />
                 </CommentOptionsMenuButton>
               }
               isOpen={ isCommentOptionsMenuOpen }
@@ -105,16 +105,16 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
             />
           </header>
 
-          <p>
+          <CommentContent>
             {isEdited && (
               <EditionWarn>
-                <PencilIcon size={16} />
+                <PencilIcon />
                 Edited
               </EditionWarn>
             )}
             { commentContent }
-          </p>
-        </CommentContent>
+          </CommentContent>
+        </CommentContentAndInfo>
 
         <footer>
           <LikeButton onClick={ handleLikeComment } $isLiked={ isCommentLiked }>

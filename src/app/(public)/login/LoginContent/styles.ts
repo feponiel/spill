@@ -58,6 +58,10 @@ export const GithubAuthButton = styled.button`
         inset 0 1px 0 rgba(255,255,255,0.05),
         0 6px 16px rgba(0,0,0,0.75);
     }
+
+    @media (max-width: 1024px) {
+      height: 5rem;
+    }
   `}
 `
 

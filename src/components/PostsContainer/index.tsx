@@ -6,26 +6,27 @@ import { CreatePostButton, NoPostsMessage, StyledPostsContainer } from "./styles
 import { PlusIcon } from "@phosphor-icons/react"
 import { CreatePostModal } from "@/components/CreatePostModal"
 import { Title } from "@/styles/global"
-import { useAuthUser } from "@/hooks/useAuthUser"
 import { LoadingWheel } from "../LoadingWheel"
 import { PostWithEssentialInfo } from "@/@types/post-with-essential-info"
+import { useAuthUserStore } from "@/store/useAuthUserStore"
 
 interface PostsContainerProps {
   posts: PostWithEssentialInfo[]
   setPosts: Dispatch<SetStateAction<PostWithEssentialInfo[]>>
+  isPostsLoading: boolean
   username?: string
   topic?: string
 }
 
-export function PostsContainer({ posts, setPosts, username, topic }: PostsContainerProps) {
-  const { data: authUser, isLoading } = useAuthUser()
+export function PostsContainer({ posts, setPosts, isPostsLoading, username, topic }: PostsContainerProps) {
+  const { user, isLoading } = useAuthUserStore()
   const [isCreatePostModalOpen, setCreatePostModalOpen] = useState(false)
 
   function handleDeletePost(postId: string) {
     setPosts(prev => prev.filter(post => post.id !== postId))
   }
 
-  if (isLoading || !authUser) {
+  if (isLoading || !user || isPostsLoading) {
     return (
       <StyledPostsContainer className="loading">
         <LoadingWheel size="lg" />
@@ -66,7 +67,7 @@ export function PostsContainer({ posts, setPosts, username, topic }: PostsContai
                 publishedAt={ new Date(post.created_at) }
                 updatedAt={ new Date(post.updated_at) }
                 isLiked={ post.is_liked }
-                amITheAuthor={ authUser.id === post.author_id }
+                amITheAuthor={ user.id === post.author_id }
                 handleDelete={ () => handleDeletePost(post.id) }
                 key={ post.id }
               />
