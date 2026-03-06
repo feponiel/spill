@@ -34,7 +34,27 @@ const dropdownStyles = css`
     }
 
     @media (max-width: 1024px) {
-      width: 250px;
+      width: 280px;
+      
+      & > * {
+        padding: ${theme.space[4]} ${theme.space[3]};
+      }
+    }
+
+    @media (max-width: 530px) {
+      width: 180px;
+
+      & > * {
+        padding: ${theme.space[6]} ${theme.space[3]};
+      }
+    }
+
+    @media (max-width: 360px) {
+      width: 160px;
+
+      & > * {
+        padding: ${theme.space[6]} ${theme.space[3]};
+      }
     }
   `}
 `
