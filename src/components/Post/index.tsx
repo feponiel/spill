@@ -96,19 +96,19 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
   async function handleCreateComment() {
     setPostCommentsAmount(prev => prev + 1)
     setPage(1)
-    await fetchComments(page)
+    await fetchComments(1)
   }
 
   async function handleDeleteComment() {
     setPostCommentsAmount(prev => prev - 1)
     setPage(1)
-    await fetchComments(page)
+    await fetchComments(1)
   }
 
   async function handleOpenComments() {
     if (comments.length === 0) {
       setPage(1)
-      await fetchComments(page)
+      await fetchComments(1)
     }
   }
 
