@@ -8,19 +8,13 @@ export const StyledPostsContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20rem 0;
+      height: calc(100vh - 250px);
     }
 
     > header {
       margin-bottom: ${theme.space[8]};
       padding-bottom: ${theme.space[4]};
       border-bottom: 1px solid ${theme.colors.accentColor};
-    }
-
-    @media (max-width: 768px) {
-      &.loading {
-        padding: 17rem 0;
-      }
     }
   `}
 `
