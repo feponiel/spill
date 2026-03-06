@@ -29,5 +29,17 @@ export const SearchResultTagLink = styled(Link)`
       font-size: ${theme.fontSizes.xs};
       color: ${theme.colors.shade400};
     }
+
+    @media (max-width: 530px) {
+      padding: ${theme.space[5]} ${theme.space[2]};
+
+      strong {
+        font-size: ${theme.fontSizes.md};
+      }
+
+      span {
+        font-size: ${theme.fontSizes.sm};
+      }
+    }
   `}
 `
