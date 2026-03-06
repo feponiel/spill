@@ -1,4 +1,4 @@
-import { Comment } from "@prisma/client"
+import { Comment } from '@prisma/client'
 
 export type CommentWithEssentialInfo = Comment & {
   likes_amount: number

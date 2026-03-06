@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { SinglePostDisplay } from "./SinglePostDisplay";
+import { Metadata } from 'next'
+import { SinglePostDisplay } from './SinglePostDisplay'
 
 export const metadata: Metadata = {
-  title: "Viewing post"
+  title: 'Viewing post',
 }
 
 export default async function SinglePost({
@@ -12,5 +12,5 @@ export default async function SinglePost({
 }) {
   const { postId } = await params
 
-  return <SinglePostDisplay postId={ postId } />
+  return <SinglePostDisplay postId={postId} />
 }

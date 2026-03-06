@@ -1,6 +1,6 @@
-import { forwardRef, ImgHTMLAttributes } from "react";
-import { AvatarPicture } from "./styles";
-import unknownUser from "@/../public/unknown-user.png"
+import { forwardRef, ImgHTMLAttributes } from 'react'
+import { AvatarPicture } from './styles'
+import unknownUser from '@/../public/unknown-user.png'
 
 interface AvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
   username?: string
@@ -9,7 +9,18 @@ interface AvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
 }
 
 export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
-  ({ username = "Unknown user avatar picture", url = unknownUser.src, hasBorder = true, src, width, height, ...props }, ref) => {
+  (
+    {
+      username = 'Unknown user avatar picture',
+      url = unknownUser.src,
+      hasBorder = true,
+      src: _src,
+      width: _width,
+      height: _height,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <AvatarPicture
         ref={ref}
@@ -21,7 +32,7 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
         {...props}
       />
     )
-  }
+  },
 )
 
-Avatar.displayName = "Avatar"
+Avatar.displayName = 'Avatar'

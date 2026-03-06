@@ -1,5 +1,5 @@
-import { Adapter, AdapterUser, AdapterAccount } from "next-auth/adapters"
-import { prisma } from "../prisma"
+import { Adapter, AdapterUser, AdapterAccount } from 'next-auth/adapters'
+import { prisma } from '../prisma'
 
 function mapUser(user: any): AdapterUser {
   return {
@@ -16,7 +16,7 @@ export function PrismaAdapter(): Adapter {
     async createUser(user: AdapterUser) {
       const createdUser = await prisma.user.create({
         data: {
-          name: user.name ?? "Unnamed User",
+          name: user.name ?? 'Unnamed User',
           email: user.email!,
           avatar_url: user.image,
         },
@@ -67,7 +67,7 @@ export function PrismaAdapter(): Adapter {
         },
         data: {
           ...(user.name !== undefined && {
-            name: user.name ?? "Unnamed User",
+            name: user.name ?? 'Unnamed User',
           }),
           ...(user.image !== undefined && {
             avatar_url: user.image,

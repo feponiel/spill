@@ -1,14 +1,17 @@
-import { prisma } from "@/lib/prisma"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from '@/lib/prisma'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { getServerSession } from 'next-auth'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(request: NextRequest, { params }: { params: { postId: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { postId: string } },
+) {
   const { postId } = await params
   const { content } = await request.json()
-  
+
   const session = await getServerSession(authOptions)
-  
+
   if (!session?.user?.id) {
     return NextResponse.json(null, { status: 401 })
   }
@@ -31,30 +34,33 @@ export async function POST(request: NextRequest, { params }: { params: { postId:
     },
     include: {
       author: true,
-    }
+    },
   })
 
-  return NextResponse.json({
-    id: comment.id,
-    author_id: comment.author_id,
-    post_id: comment.post_id,
-    content: comment.content,
-    created_at: comment.created_at,
-    updated_at: comment.updated_at,
-    likes_amount: 0,
-    is_liked: false,
+  return NextResponse.json(
+    {
+      id: comment.id,
+      author_id: comment.author_id,
+      post_id: comment.post_id,
+      content: comment.content,
+      created_at: comment.created_at,
+      updated_at: comment.updated_at,
+      likes_amount: 0,
+      is_liked: false,
 
-    author: {
-      name: comment.author.name,
-      synthesis: comment.author.synthesis,
-      avatar_url: comment.author.avatar_url,
-    }
-  }, { status: 201 })
+      author: {
+        name: comment.author.name,
+        synthesis: comment.author.synthesis,
+        avatar_url: comment.author.avatar_url,
+      },
+    },
+    { status: 201 },
+  )
 }
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { postId: string } }
+  { params }: { params: { postId: string } },
 ) {
   const { postId } = await params
 
@@ -68,34 +74,34 @@ export async function GET(
 
   const { searchParams } = new URL(request.url)
 
-  const limit = Number(searchParams.get("limit")) || 5
-  const page = Number(searchParams.get("page")) || 1
+  const limit = Number(searchParams.get('limit')) || 5
+  const page = Number(searchParams.get('page')) || 1
 
   const skip = (page - 1) * limit
 
   const myComments = await prisma.comment.findMany({
     where: {
       post_id: postId,
-      author_id: userId
+      author_id: userId,
     },
     include: {
       author: true,
       commentLikes: {
         where: {
           user_id: userId,
-        }
+        },
       },
       _count: {
         select: {
           commentLikes: true,
-        }
-      }
+        },
+      },
     },
     orderBy: {
-      created_at: "desc"
+      created_at: 'desc',
     },
     skip,
-    take: limit + 1
+    take: limit + 1,
   })
 
   const remaining = limit - myComments.length
@@ -107,33 +113,33 @@ export async function GET(
       where: {
         post_id: postId,
         NOT: {
-          author_id: userId
-        }
+          author_id: userId,
+        },
       },
       include: {
         author: true,
         commentLikes: {
           where: {
             user_id: userId,
-          }
+          },
         },
         _count: {
           select: {
             commentLikes: true,
-          }
-        }
+          },
+        },
       },
       orderBy: [
         {
           commentLikes: {
-            _count: "desc"
-          }
+            _count: 'desc',
+          },
         },
         {
-          created_at: "desc"
-        }
+          created_at: 'desc',
+        },
       ],
-      take: remaining
+      take: remaining,
     })
   }
 
@@ -141,23 +147,26 @@ export async function GET(
   const hasMore = finalComments.length === limit + 1
   const displayList = finalComments.slice(0, limit)
 
-  return NextResponse.json({
-    data: displayList.map(comment => ({
-      id: comment.id,
-      author_id: comment.author_id,
-      post_id: comment.post_id,
-      content: comment.content,
-      created_at: comment.created_at,
-      updated_at: comment.updated_at,
-      likes_amount: comment._count.commentLikes,
-      is_liked: comment.commentLikes.length > 0,
+  return NextResponse.json(
+    {
+      data: displayList.map((comment) => ({
+        id: comment.id,
+        author_id: comment.author_id,
+        post_id: comment.post_id,
+        content: comment.content,
+        created_at: comment.created_at,
+        updated_at: comment.updated_at,
+        likes_amount: comment._count.commentLikes,
+        is_liked: comment.commentLikes.length > 0,
 
-      author: {
-        name: comment.author.name,
-        synthesis: comment.author.synthesis,
-        avatar_url: comment.author.avatar_url
-      }
-    })),
-    hasMore
-  }, { status: 200 })
+        author: {
+          name: comment.author.name,
+          synthesis: comment.author.synthesis,
+          avatar_url: comment.author.avatar_url,
+        },
+      })),
+      hasMore,
+    },
+    { status: 200 },
+  )
 }

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 export const StyledComment = styled.li`
   ${({ theme }) => css`
@@ -87,14 +87,14 @@ export const CommentOptionsMenuButton = styled.button`
     background: none;
     color: ${theme.colors.shade100};
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       color: ${theme.colors.accentColor};
     }
 
     svg {
-      font-size: ${theme.fontSizes["2xl"]};
+      font-size: ${theme.fontSizes['2xl']};
     }
   `}
 `
@@ -127,7 +127,7 @@ export const LikeButton = styled.button<LikeButtonProps>`
     background: none;
     border: none;
     gap: ${theme.space[1]};
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
     svg {
@@ -137,14 +137,14 @@ export const LikeButton = styled.button<LikeButtonProps>`
     span {
       display: flex;
       align-items: center;
-      
+
       strong {
         color: ${theme.colors.shade400};
         font-weight: ${theme.fontWeights.regular};
       }
 
       strong::before {
-        content: "•";
+        content: '•';
         margin: 0 ${theme.space[1]};
       }
     }
@@ -153,7 +153,8 @@ export const LikeButton = styled.button<LikeButtonProps>`
       color: ${theme.colors.shade300};
     }
 
-    ${ $isLiked && css`
+    ${$isLiked &&
+    css`
       color: ${theme.colors.accentColorDark};
 
       &:hover {

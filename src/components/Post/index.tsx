@@ -1,20 +1,28 @@
-"use client"
+'use client'
 
-import { formatDate } from "@/utils/formatDate"
-import { Avatar } from "../Avatar"
-import { Info, Content, PostDate, InfoDisplay, StyledPost, EditionWarn, PostOptionsMenuButton } from "./styles"
-import { useState } from "react"
-import { ClockIcon, DotsThreeIcon, PencilIcon } from "@phosphor-icons/react"
-import { DeletePostModal } from "./DeletePostModal"
-import { PostOptionsMenu } from "./PostOptionsMenu"
-import { EditPostModal } from "./EditPostModal"
-import * as Collapsible from "@radix-ui/react-collapsible"
-import { EngagementPanel } from "./EngagementPanel"
-import { CommentSection } from "./CommentsSection"
-import { ContentWrapper } from "./ContentWrapper"
-import { api } from "@/lib/axios"
-import Link from "next/link"
-import { CommentWithEssentialInfo } from "@/@types/comment-with-essential-info"
+import { formatDate } from '@/utils/formatDate'
+import { Avatar } from '../Avatar'
+import {
+  Info,
+  Content,
+  PostDate,
+  InfoDisplay,
+  StyledPost,
+  EditionWarn,
+  PostOptionsMenuButton,
+} from './styles'
+import { useState } from 'react'
+import { ClockIcon, DotsThreeIcon, PencilIcon } from '@phosphor-icons/react'
+import { DeletePostModal } from './DeletePostModal'
+import { PostOptionsMenu } from './PostOptionsMenu'
+import { EditPostModal } from './EditPostModal'
+import * as Collapsible from '@radix-ui/react-collapsible'
+import { EngagementPanel } from './EngagementPanel'
+import { CommentSection } from './CommentsSection'
+import { ContentWrapper } from './ContentWrapper'
+import { api } from '@/lib/axios'
+import Link from 'next/link'
+import { CommentWithEssentialInfo } from '@/@types/comment-with-essential-info'
 
 interface Author {
   id: string
@@ -36,7 +44,18 @@ interface PostProps {
   handleDelete: () => void
 }
 
-export function Post({ id, author, content, likesAmount, commentsAmount, publishedAt, updatedAt, isLiked, amITheAuthor, handleDelete }: PostProps) {
+export function Post({
+  id,
+  author,
+  content,
+  likesAmount,
+  commentsAmount,
+  publishedAt,
+  updatedAt,
+  isLiked,
+  amITheAuthor,
+  handleDelete,
+}: PostProps) {
   publishedAt = new Date(publishedAt)
   updatedAt = new Date(updatedAt)
 
@@ -56,35 +75,35 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
 
   const {
     formatedDate: postDateFormated,
-    formatedDateRelativeToNow: postDateRelativeToNow 
+    formatedDateRelativeToNow: postDateRelativeToNow,
   } = formatDate(publishedAt)
 
   async function handleLikePost() {
     if (isPostLiked) {
       await api.delete(`/posts/${id}/like`)
 
-      setPostLikesAmount(prev => prev - 1)
+      setPostLikesAmount((prev) => prev - 1)
       setPostLiked(false)
     } else {
       await api.post(`/posts/${id}/like`)
 
-      setPostLikesAmount(prev => prev + 1)
+      setPostLikesAmount((prev) => prev + 1)
       setPostLiked(true)
     }
   }
 
   async function fetchComments(pageToFetch = 1) {
     const { data: response } = await api.get(
-      `/posts/${id}/comments?page=${pageToFetch}&limit=5`
+      `/posts/${id}/comments?page=${pageToFetch}&limit=5`,
     )
 
     if (pageToFetch === 1) {
       setComments(response.data)
     } else {
-      setComments(prev => {
-        const existingIds = new Set(prev.map(c => c.id))
+      setComments((prev) => {
+        const existingIds = new Set(prev.map((c) => c.id))
         const newComments = response.data.filter(
-          (c: CommentWithEssentialInfo) => !existingIds.has(c.id)
+          (c: CommentWithEssentialInfo) => !existingIds.has(c.id),
         )
         return [...prev, ...newComments]
       })
@@ -94,13 +113,13 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
   }
 
   async function handleCreateComment() {
-    setPostCommentsAmount(prev => prev + 1)
+    setPostCommentsAmount((prev) => prev + 1)
     setPage(1)
     await fetchComments(1)
   }
 
   async function handleDeleteComment() {
-    setPostCommentsAmount(prev => prev - 1)
+    setPostCommentsAmount((prev) => prev - 1)
     setPage(1)
     await fetchComments(1)
   }
@@ -128,7 +147,7 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
     handleDelete()
     setDeletePostModalOpen(false)
   }
-  
+
   async function handleCopyLink() {
     await navigator.clipboard.writeText(`${window.location.origin}/post/${id}`)
 
@@ -141,21 +160,22 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
     <StyledPost>
       <header>
         <InfoDisplay>
-          <Link href={ `/user/${author.id}` }>
-            <Avatar username={ author.name } url={ author.avatar_url } />
+          <Link href={`/user/${author.id}`}>
+            <Avatar username={author.name} url={author.avatar_url} />
           </Link>
-          
+
           <Info>
-            <Link href={ `/user/${author.id}` }>
-              <strong>{ author.name }</strong>
-              { author.synthesis &&
-                <span>{ author.synthesis }</span>
-              }
+            <Link href={`/user/${author.id}`}>
+              <strong>{author.name}</strong>
+              {author.synthesis && <span>{author.synthesis}</span>}
             </Link>
-            <PostDate title={ postDateFormated } dateTime={ publishedAt.toISOString() }>
+            <PostDate
+              title={postDateFormated}
+              dateTime={publishedAt.toISOString()}
+            >
               <ClockIcon />
 
-              { postDateRelativeToNow }
+              {postDateRelativeToNow}
             </PostDate>
           </Info>
         </InfoDisplay>
@@ -166,13 +186,13 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
               <DotsThreeIcon />
             </PostOptionsMenuButton>
           }
-          amITheAuthor={ amITheAuthor }
-          isPostLinkCopied={ isPostLinkCopied }
-          isOpen={ isPostOptionsMenuOpen }
-          handleToggleMenu={ setPostOptionsMenuOpen }
-          handleChooseEditOption={ () => setEditPostModalOpen(true) }
-          handleChooseDeleteOption={ () => setDeletePostModalOpen(true) }
-          handleChooseCopyLinkOption={ handleCopyLink }
+          amITheAuthor={amITheAuthor}
+          isPostLinkCopied={isPostLinkCopied}
+          isOpen={isPostOptionsMenuOpen}
+          handleToggleMenu={setPostOptionsMenuOpen}
+          handleChooseEditOption={() => setEditPostModalOpen(true)}
+          handleChooseDeleteOption={() => setDeletePostModalOpen(true)}
+          handleChooseCopyLinkOption={handleCopyLink}
         />
       </header>
 
@@ -183,12 +203,12 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
             Edited
           </EditionWarn>
         )}
-        
-        <ContentWrapper>{ postContent }</ContentWrapper>
+
+        <ContentWrapper>{postContent}</ContentWrapper>
       </Content>
 
-      <Collapsible.Root 
-        open={isCommentSectionOpen} 
+      <Collapsible.Root
+        open={isCommentSectionOpen}
         onOpenChange={async (open) => {
           if (open && comments.length === 0) {
             await handleOpenComments()
@@ -196,20 +216,37 @@ export function Post({ id, author, content, likesAmount, commentsAmount, publish
           setCommentSectionOpen(open)
         }}
       >
-        <EngagementPanel isPostLiked={ isPostLiked } likesAmount={ postLikesAmount } commentsAmount={ postCommentsAmount } onLikePost={ handleLikePost } onOpenComments={ handleOpenComments } />
+        <EngagementPanel
+          isPostLiked={isPostLiked}
+          likesAmount={postLikesAmount}
+          commentsAmount={postCommentsAmount}
+          onLikePost={handleLikePost}
+          onOpenComments={handleOpenComments}
+        />
 
-        <CommentSection 
-          postId={ id } 
-          commentList={ comments } 
-          hasMore={ hasMore } 
-          onCreateNewComment={ handleCreateComment }
-          onDeleteComment={ handleDeleteComment }
-          onViewMore={ handleViewMoreComments } 
+        <CommentSection
+          postId={id}
+          commentList={comments}
+          hasMore={hasMore}
+          onCreateNewComment={handleCreateComment}
+          onDeleteComment={handleDeleteComment}
+          onViewMore={handleViewMoreComments}
         />
       </Collapsible.Root>
 
-      <EditPostModal defaultPostContentValue={ postContent } isOpen={ isEditPostModalOpen } postId={id} handleToggleOpen={ setEditPostModalOpen } handleEditPost={ handleEditPost } />
-      <DeletePostModal isOpen={ isDeletePostModalOpen } postId={id} handleToggleModal={ () => setDeletePostModalOpen(false) } handleDeletePost={ handleDeletePost } />
+      <EditPostModal
+        defaultPostContentValue={postContent}
+        isOpen={isEditPostModalOpen}
+        postId={id}
+        handleToggleOpen={setEditPostModalOpen}
+        handleEditPost={handleEditPost}
+      />
+      <DeletePostModal
+        isOpen={isDeletePostModalOpen}
+        postId={id}
+        handleToggleModal={() => setDeletePostModalOpen(false)}
+        handleDeletePost={handleDeletePost}
+      />
     </StyledPost>
   )
 }

@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
 import { darkTheme } from '@/styles/themes/darkTheme'
 import { lightTheme } from '@/styles/themes/lightTheme'
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie } from 'nookies'
 
 export type ThemeType = 'dark' | 'light'
 
@@ -20,21 +20,19 @@ interface ThemeContextProps {
   children: ReactNode
 }
 
-export function ThemeContextProvider({ initialTheme, children }: ThemeContextProps) {
+export function ThemeContextProvider({
+  initialTheme,
+  children,
+}: ThemeContextProps) {
   const [theme, setTheme] = useState<ThemeType>(initialTheme)
 
-  useEffect(() => {
-    const cookies = parseCookies()
-    const storedTheme = cookies.theme as ThemeType
-    
-    if (storedTheme) setTheme(storedTheme)
-  }, [])
-
   function toggleTheme() {
-    setTheme(prev => {
+    setTheme((prev) => {
       const newTheme = prev === 'dark' ? 'light' : 'dark'
-      setCookie(null, 'theme', newTheme, { path: '/', maxAge: 60 * 60 * 24 * 365 }) // 1 year
-      
+      setCookie(null, 'theme', newTheme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+      })
       return newTheme
     })
   }
@@ -42,7 +40,7 @@ export function ThemeContextProvider({ initialTheme, children }: ThemeContextPro
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-        { children }
+        {children}
       </ThemeProvider>
     </ThemeContext.Provider>
   )

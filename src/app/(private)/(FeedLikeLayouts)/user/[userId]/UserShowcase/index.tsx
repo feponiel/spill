@@ -1,12 +1,18 @@
-"use client"
+'use client'
 
-import { PostsContainer } from "@/components/PostsContainer";
-import { Banner, StyledUserShowcase, UserProfileDisplay, UserProfileInfo, UserProfilePresentation } from "./styles";
-import { Avatar } from "@/components/Avatar";
-import { useEffect, useState } from "react";
-import { api } from "@/lib/axios";
-import { LoadingWheel } from "@/components/LoadingWheel";
-import { PostWithEssentialInfo } from "@/@types/post-with-essential-info";
+import { PostsContainer } from '@/components/PostsContainer'
+import {
+  Banner,
+  StyledUserShowcase,
+  UserProfileDisplay,
+  UserProfileInfo,
+  UserProfilePresentation,
+} from './styles'
+import { Avatar } from '@/components/Avatar'
+import { useEffect, useState } from 'react'
+import { api } from '@/lib/axios'
+import { LoadingWheel } from '@/components/LoadingWheel'
+import { PostWithEssentialInfo } from '@/@types/post-with-essential-info'
 
 interface UserShowCaseProps {
   userId: string
@@ -32,13 +38,15 @@ export function UserShowcase({ userId }: UserShowCaseProps) {
     }
 
     fetchUserProfile()
-  }, [])
+  }, [userId])
 
   useEffect(() => {
     async function fetchPosts() {
       try {
         setPostsLoading(true)
-        const { data: posts } = await api.get<PostWithEssentialInfo[]>(`/user/${userId}/posts`)
+        const { data: posts } = await api.get<PostWithEssentialInfo[]>(
+          `/user/${userId}/posts`,
+        )
         setPostsLoading(false)
 
         setPosts(posts)
@@ -48,7 +56,7 @@ export function UserShowcase({ userId }: UserShowCaseProps) {
     }
 
     fetchPosts()
-  }, [])
+  }, [userId])
 
   if (!user) {
     return (
@@ -62,20 +70,27 @@ export function UserShowcase({ userId }: UserShowCaseProps) {
     <StyledUserShowcase>
       <UserProfileInfo>
         <header>
-          <Banner style={ { backgroundImage: `url(${user.banner_url})` } }></Banner>
+          <Banner
+            style={{ backgroundImage: `url(${user.banner_url})` }}
+          ></Banner>
         </header>
-        
+
         <UserProfileDisplay>
-          <Avatar username={ user.name } url={ user.avatar_url } />
+          <Avatar username={user.name} url={user.avatar_url} />
 
           <UserProfilePresentation>
-            <strong>{ user.name }</strong>
+            <strong>{user.name}</strong>
             <span>{user.synthesis}</span>
           </UserProfilePresentation>
         </UserProfileDisplay>
       </UserProfileInfo>
 
-      <PostsContainer posts={ posts } setPosts={ setPosts } isPostsLoading={ isPostsLoading } username={ user.name } />
+      <PostsContainer
+        posts={posts}
+        setPosts={setPosts}
+        isPostsLoading={isPostsLoading}
+        username={user.name}
+      />
     </StyledUserShowcase>
   )
 }

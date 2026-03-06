@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { PostWithEssentialInfo } from "@/@types/post-with-essential-info"
-import { PostsContainer } from "@/components/PostsContainer"
-import { api } from "@/lib/axios"
-import { useEffect, useState } from "react"
+import { PostWithEssentialInfo } from '@/@types/post-with-essential-info'
+import { PostsContainer } from '@/components/PostsContainer'
+import { api } from '@/lib/axios'
+import { useEffect, useState } from 'react'
 
 interface SinglePostDisplayProps {
   postId: string
@@ -17,7 +17,9 @@ export function SinglePostDisplay({ postId }: SinglePostDisplayProps) {
     async function fetchPost() {
       try {
         setPostsLoading(true)
-        const { data: post } = await api.get<PostWithEssentialInfo>(`/posts/${postId}`)
+        const { data: post } = await api.get<PostWithEssentialInfo>(
+          `/posts/${postId}`,
+        )
         setPostsLoading(false)
 
         setPosts([post])
@@ -27,9 +29,13 @@ export function SinglePostDisplay({ postId }: SinglePostDisplayProps) {
     }
 
     fetchPost()
-  }, [])
-  
+  }, [postId])
+
   return (
-    <PostsContainer posts={ posts } setPosts={ setPosts } isPostsLoading={ isPostsLoading } />
+    <PostsContainer
+      posts={posts}
+      setPosts={setPosts}
+      isPostsLoading={isPostsLoading}
+    />
   )
 }

@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import styled, { css } from 'styled-components'
+import * as Tooltip from '@radix-ui/react-tooltip'
 
 export const StyledFormField = styled.label`
   ${({ theme }) => css`
@@ -20,7 +20,7 @@ export const StyledFormField = styled.label`
       background: ${theme.colors.shade900};
       border: 1px solid ${theme.colors.shade700};
       border-radius: ${theme.radius.sm};
-      
+
       &:focus-within {
         outline: 1px solid ${theme.colors.accentColor};
       }

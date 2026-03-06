@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styled, { css } from "styled-components";
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export const PostImage = styled.img`
   display: block;
@@ -12,7 +12,7 @@ export const PostLink = styled.a`
     text-decoration: none;
     font-weight: ${theme.fontWeights.bold};
     color: ${theme.colors.accentColor};
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       color: ${theme.colors.accentColorDark};
@@ -40,7 +40,7 @@ export const PostPre = styled.pre`
 export const PostUL = styled.ul`
   ${({ theme }) => css`
     list-style-position: inside;
-    
+
     li::marker {
       color: ${theme.colors.accentColor};
     }
@@ -50,7 +50,7 @@ export const PostUL = styled.ul`
 export const PostOL = styled.ol`
   ${({ theme }) => css`
     list-style-position: inside;
-    
+
     li::marker {
       color: ${theme.colors.accentColor};
     }
@@ -116,7 +116,7 @@ export const PostBlockQuote = styled.blockquote`
     position: relative;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       width: 3px;

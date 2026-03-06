@@ -1,23 +1,25 @@
-"use client"
+'use client'
 
-import { PostWithEssentialInfo } from "@/@types/post-with-essential-info"
-import { PostsContainer } from "@/components/PostsContainer"
-import { api } from "@/lib/axios"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { PostWithEssentialInfo } from '@/@types/post-with-essential-info'
+import { PostsContainer } from '@/components/PostsContainer'
+import { api } from '@/lib/axios'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export function FeedPosts() {
   const [posts, setPosts] = useState<PostWithEssentialInfo[]>([])
   const [isPostsLoading, setPostsLoading] = useState(true)
   const searchParams = useSearchParams()
 
-  const tag = searchParams.get("tag")
+  const tag = searchParams.get('tag')
 
   useEffect(() => {
     async function fetchPosts() {
       try {
         setPostsLoading(true)
-        const { data: posts } = await api.get<PostWithEssentialInfo[]>(tag ? `/posts?tag=${tag}` : `/posts`)
+        const { data: posts } = await api.get<PostWithEssentialInfo[]>(
+          tag ? `/posts?tag=${tag}` : `/posts`,
+        )
         setPostsLoading(false)
 
         setPosts(posts)
@@ -30,6 +32,11 @@ export function FeedPosts() {
   }, [tag])
 
   return (
-    <PostsContainer posts={ posts } setPosts={ setPosts } isPostsLoading={ isPostsLoading } topic={ tag ?? "" } />
+    <PostsContainer
+      posts={posts}
+      setPosts={setPosts}
+      isPostsLoading={isPostsLoading}
+      topic={tag ?? ''}
+    />
   )
 }

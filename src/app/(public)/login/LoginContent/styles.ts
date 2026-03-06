@@ -1,7 +1,7 @@
 'use client'
 
-import Link from "next/link";
-import styled, { css } from "styled-components";
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export const StyledLoginContent = styled.div`
   ${({ theme }) => css`
@@ -14,7 +14,7 @@ export const StyledLoginContent = styled.div`
 
     p {
       text-align: center;
-      font-size: ${theme.fontSizes["2xl"]};
+      font-size: ${theme.fontSizes['2xl']};
     }
   `}
 `
@@ -22,14 +22,11 @@ export const StyledLoginContent = styled.div`
 export const GithubAuthButton = styled.button`
   ${({ theme }) => css`
     height: 64px;
-    background: linear-gradient(
-      180deg,
-      #141414 0%,
-      #0f0f0f 50%,
-      #0a0a0a 100%
-    );
+    background: linear-gradient(180deg, #141414 0%, #0f0f0f 50%, #0a0a0a 100%);
     border: 1px solid ${theme.colors.shade600};
-    color: ${theme.name == "light" ? theme.colors.shade800 : theme.colors.shade300};
+    color: ${theme.name == 'light'
+      ? theme.colors.shade800
+      : theme.colors.shade300};
     font-weight: ${theme.fontWeights.bold};
     font-size: ${theme.fontSizes.lg};
     border-radius: ${theme.radius.md};
@@ -38,10 +35,11 @@ export const GithubAuthButton = styled.button`
     display: flex;
     align-items: center;
     gap: ${theme.space[5]};
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.04), 0 4px 12px rgba(0,0,0,0.6);
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.6);
     transition: all 0.2s ease;
 
     &:hover {
@@ -55,8 +53,8 @@ export const GithubAuthButton = styled.button`
       );
 
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        0 6px 16px rgba(0,0,0,0.75);
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 6px 16px rgba(0, 0, 0, 0.75);
     }
 
     @media (max-width: 1024px) {

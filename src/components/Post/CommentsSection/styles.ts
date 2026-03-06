@@ -1,13 +1,13 @@
-import { CollapsibleContent } from "@radix-ui/react-collapsible";
-import styled, { css } from "styled-components";
+import { CollapsibleContent } from '@radix-ui/react-collapsible'
+import styled, { css } from 'styled-components'
 
 export const StyledCommentsSection = styled(CollapsibleContent)`
   overflow: hidden;
 
-  &[data-state="open"] {
+  &[data-state='open'] {
     animation: slideDown 300ms ease-out;
   }
-  &[data-state="closed"] {
+  &[data-state='closed'] {
     animation: slideUp 300ms ease-out;
   }
 
@@ -97,10 +97,10 @@ export const SubmitCommentButton = styled.button`
     border: none;
     border-radius: ${theme.radius.md};
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     &:disabled {
-      opacity: .7;
+      opacity: 0.7;
       cursor: not-allowed;
     }
 
@@ -145,14 +145,16 @@ export const ViewMoreButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     svg {
       font-size: ${theme.fontSizes.sm};
     }
 
     &:hover {
-      color: ${theme.name == 'light' ? theme.colors.accentColor : theme.colors.accentColorLight};
+      color: ${theme.name == 'light'
+        ? theme.colors.accentColor
+        : theme.colors.accentColorLight};
     }
   `}
 `

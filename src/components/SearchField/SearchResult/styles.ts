@@ -1,12 +1,12 @@
-import { CollapsibleContent } from "@radix-ui/react-collapsible"
-import styled from "styled-components"
-import { css } from "styled-components"
+import { CollapsibleContent } from '@radix-ui/react-collapsible'
+import styled from 'styled-components'
+import { css } from 'styled-components'
 
 export const StyledSearchResult = styled(CollapsibleContent)`
   width: 100%;
   overflow: hidden;
 
-  &[data-state="open"] {
+  &[data-state='open'] {
     animation: slideDown 200ms ease-out;
   }
 
@@ -49,14 +49,14 @@ export const SearchResultHeader = styled.header`
       border: 1px solid ${theme.colors.accentColorDark};
       border-radius: ${theme.radius.lg};
       cursor: pointer;
-      transition: .2s;
+      transition: 0.2s;
 
-      &[data-state="unchecked"]:hover {
+      &[data-state='unchecked']:hover {
         color: ${theme.colors.accentColor};
         border-color: ${theme.colors.accentColor};
       }
 
-      &[data-state="checked"] {
+      &[data-state='checked'] {
         color: ${theme.colors.white};
         background: ${theme.colors.accentColor};
         border-color: ${theme.colors.accentColor};
@@ -88,7 +88,7 @@ export const SearchResultsWrapper = styled.ul`
 
 export const NoResultsMessage = styled.p`
   ${({ theme }) => css`
-    font-size: ${theme.fontSizes["sm"]};
+    font-size: ${theme.fontSizes['sm']};
     color: ${theme.colors.shade400};
     padding: 0 ${theme.space[2]};
   `}

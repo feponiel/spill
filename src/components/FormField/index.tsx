@@ -1,11 +1,21 @@
-import { LockIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { StyledFormField, TooltipContent, ValidationErrorMessage } from "./styles"
-import * as Tooltip from "@radix-ui/react-tooltip"
-import { ChangeEvent, forwardRef } from "react"
+import { LockIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import {
+  StyledFormField,
+  TooltipContent,
+  ValidationErrorMessage,
+} from './styles'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import {
+  ChangeEvent,
+  forwardRef,
+  InputHTMLAttributes,
+  Ref,
+  TextareaHTMLAttributes,
+} from 'react'
 
 interface FormFieldProps {
   name: string
-  type?: "input" | "textarea"
+  type?: 'input' | 'textarea'
   placeholder?: string
   label?: string
   isDisabled?: boolean
@@ -14,30 +24,32 @@ interface FormFieldProps {
   validationErrorMessage?: string
   defaultValue?: string
   realtimeValue?: string
-  onChange?: (event: ChangeEvent<any>) => void
+  onChange?: (_event: ChangeEvent<any>) => void
   required?: boolean
 }
 
 export const FormField = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
-  FormFieldProps & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>
+  FormFieldProps &
+    InputHTMLAttributes<HTMLInputElement> &
+    TextareaHTMLAttributes<HTMLTextAreaElement>
 >(function FormField(
   {
     name,
-    type = "input",
+    type = 'input',
     placeholder,
     label,
     isDisabled = false,
     disabledMessage = "You can't fill in this field",
     hasValidationError = false,
-    validationErrorMessage = "This field is incorrect",
+    validationErrorMessage = 'This field is incorrect',
     defaultValue,
     realtimeValue,
     onChange,
     required,
     ...rest
   },
-  ref
+  ref,
 ) {
   return (
     <StyledFormField>
@@ -62,9 +74,9 @@ export const FormField = forwardRef<
         </span>
       )}
 
-      {type === "input" && (
+      {type === 'input' && (
         <input
-          ref={ref as React.Ref<HTMLInputElement>}
+          ref={ref as Ref<HTMLInputElement>}
           type="text"
           name={name}
           placeholder={placeholder}
@@ -77,9 +89,9 @@ export const FormField = forwardRef<
         />
       )}
 
-      {type === "textarea" && (
+      {type === 'textarea' && (
         <textarea
-          ref={ref as React.Ref<HTMLTextAreaElement>}
+          ref={ref as Ref<HTMLTextAreaElement>}
           name={name}
           placeholder={placeholder}
           defaultValue={defaultValue}

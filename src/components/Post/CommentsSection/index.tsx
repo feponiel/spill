@@ -1,22 +1,27 @@
-import { Avatar } from "@/components/Avatar";
-import { CommentArea, CommentForm, CommentList, CommentsSectionWrapper, CommentsWrapper, StyledCommentsSection, SubmitCommentButton, ViewMoreButton } from "./styles";
-import { FormField } from "@/components/FormField";
-import { Comment } from "./Comment";
-import { ArrowDownIcon } from "@phosphor-icons/react";
-import { LoadingWheel } from "@/components/LoadingWheel";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { api } from "@/lib/axios";
-import { CommentWithEssentialInfo } from "@/@types/comment-with-essential-info";
-import { useAuthUserStore } from "@/store/useAuthUserStore";
+import { Avatar } from '@/components/Avatar'
+import {
+  CommentArea,
+  CommentForm,
+  CommentList,
+  CommentsSectionWrapper,
+  CommentsWrapper,
+  StyledCommentsSection,
+  SubmitCommentButton,
+  ViewMoreButton,
+} from './styles'
+import { FormField } from '@/components/FormField'
+import { Comment } from './Comment'
+import { ArrowDownIcon } from '@phosphor-icons/react'
+import { LoadingWheel } from '@/components/LoadingWheel'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { api } from '@/lib/axios'
+import { CommentWithEssentialInfo } from '@/@types/comment-with-essential-info'
+import { useAuthUserStore } from '@/store/useAuthUserStore'
 
 const createNewCommentFormSchema = z.object({
-  content: z
-    .string()
-    .trim()
-    .min(1)
-    .max(2_000)
+  content: z.string().trim().min(1).max(2_000),
 })
 
 type createNewCommentFormData = z.infer<typeof createNewCommentFormSchema>
@@ -30,9 +35,21 @@ interface CommentSectionProps {
   onViewMore: () => void
 }
 
-export function CommentSection({ postId, commentList, hasMore, onCreateNewComment, onDeleteComment, onViewMore }: CommentSectionProps) {
-  const { formState: { isValid, isSubmitting }, handleSubmit, register, reset } = useForm<createNewCommentFormData>({
-    resolver: zodResolver(createNewCommentFormSchema)
+export function CommentSection({
+  postId,
+  commentList,
+  hasMore,
+  onCreateNewComment,
+  onDeleteComment,
+  onViewMore,
+}: CommentSectionProps) {
+  const {
+    formState: { isValid, isSubmitting },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<createNewCommentFormData>({
+    resolver: zodResolver(createNewCommentFormSchema),
   })
   const { user, isLoading } = useAuthUserStore()
 
@@ -47,47 +64,55 @@ export function CommentSection({ postId, commentList, hasMore, onCreateNewCommen
     <StyledCommentsSection>
       <CommentsSectionWrapper>
         <CommentArea>
-          { isLoading || !user ? (
+          {isLoading || !user ? (
             <LoadingWheel size="sm" />
           ) : (
-            <Avatar username={ user.name } url={ user.avatar_url } hasBorder={false} />
-          ) }
+            <Avatar
+              username={user.name}
+              url={user.avatar_url}
+              hasBorder={false}
+            />
+          )}
 
-          <CommentForm onSubmit={ handleSubmit(handleCreateNewComment) }>
+          <CommentForm onSubmit={handleSubmit(handleCreateNewComment)}>
             <FormField
-                type="textarea"
-                placeholder="Write something cool..."
-                {...register("content")}
-              />
+              type="textarea"
+              placeholder="Write something cool..."
+              {...register('content')}
+            />
 
-              <SubmitCommentButton type="submit" disabled={ !isValid }>
-                { isSubmitting ? (
-                  <LoadingWheel size="sm" color="white" />
-                ) : (
-                  <span>Submit</span>
-                ) }
-              </SubmitCommentButton>
+            <SubmitCommentButton type="submit" disabled={!isValid}>
+              {isSubmitting ? (
+                <LoadingWheel size="sm" color="white" />
+              ) : (
+                <span>Submit</span>
+              )}
+            </SubmitCommentButton>
           </CommentForm>
         </CommentArea>
 
-        <CommentList className={commentList.length > 0 ? "with-comments" : ""}>
+        <CommentList className={commentList.length > 0 ? 'with-comments' : ''}>
           <CommentsWrapper>
-            { commentList.map(comment => (
+            {commentList.map((comment) => (
               <Comment
-                key={ comment.id }
-                id={ comment.id }
-                author={ { id: comment.author_id, name: comment.author.name, synthesis: comment.author.synthesis, avatar_url: comment.author.avatar_url } }
-                content={ comment.content }
-                createdAt={ comment.created_at }
-                updatedAt={ comment.updated_at }
-                likesAmount={ comment.likes_amount }
-                isLiked={ comment.is_liked }
-                amITheAuthor = { user?.id === comment.author_id }
-                handleDelete={ onDeleteComment }
+                key={comment.id}
+                id={comment.id}
+                author={{
+                  id: comment.author_id,
+                  name: comment.author.name,
+                  synthesis: comment.author.synthesis,
+                  avatar_url: comment.author.avatar_url,
+                }}
+                content={comment.content}
+                createdAt={comment.created_at}
+                updatedAt={comment.updated_at}
+                likesAmount={comment.likes_amount}
+                isLiked={comment.is_liked}
+                amITheAuthor={user?.id === comment.author_id}
+                handleDelete={onDeleteComment}
               />
-            )) }
+            ))}
           </CommentsWrapper>
-
 
           {hasMore && (
             <footer>

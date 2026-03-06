@@ -1,5 +1,5 @@
-import * as Dialog from "@radix-ui/react-dialog";
-import styled, { css } from "styled-components";
+import * as Dialog from '@radix-ui/react-dialog'
+import styled, { css } from 'styled-components'
 
 export const DialogOverlay = styled(Dialog.Overlay)`
   width: 100vw;
@@ -7,7 +7,7 @@ export const DialogOverlay = styled(Dialog.Overlay)`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
 `
 
@@ -51,7 +51,7 @@ export const DialogClose = styled(Dialog.Close)`
     border-radius: ${theme.radius.sm};
     line-height: 0;
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       color: ${theme.colors.red500};

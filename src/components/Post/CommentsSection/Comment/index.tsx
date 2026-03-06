@@ -1,7 +1,21 @@
-import { ClockIcon, DotsThreeIcon, HeartIcon, PencilIcon } from '@phosphor-icons/react'
-import { CommentAuthorAndTime, CommentContent, CommentContentAndInfo, CommentOptionsMenuButton, CommentWrapper, EditionWarn, LikeButton, StyledComment } from "./styles"
-import { Avatar } from "../../../Avatar"
-import unknownUser from "@/../public/unknown-user.png"
+import {
+  ClockIcon,
+  DotsThreeIcon,
+  HeartIcon,
+  PencilIcon,
+} from '@phosphor-icons/react'
+import {
+  CommentAuthorAndTime,
+  CommentContent,
+  CommentContentAndInfo,
+  CommentOptionsMenuButton,
+  CommentWrapper,
+  EditionWarn,
+  LikeButton,
+  StyledComment,
+} from './styles'
+import { Avatar } from '../../../Avatar'
+import unknownUser from '@/../public/unknown-user.png'
 import { formatDate } from '@/utils/formatDate'
 import { CommentOptionsMenu } from './CommentOptionsMenu'
 import { useState } from 'react'
@@ -29,7 +43,17 @@ interface CommentProps {
   handleDelete: () => void
 }
 
-export function Comment({ id, author, content, createdAt, updatedAt, likesAmount, isLiked, amITheAuthor, handleDelete }: CommentProps) {
+export function Comment({
+  id,
+  author,
+  content,
+  createdAt,
+  updatedAt,
+  likesAmount,
+  isLiked,
+  amITheAuthor,
+  handleDelete,
+}: CommentProps) {
   createdAt = new Date(createdAt)
   updatedAt = new Date(updatedAt)
 
@@ -43,19 +67,19 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
 
   const {
     formatedDate: creationDateFormated,
-    formatedDateRelativeToNow: creationDateRelativeToNow 
+    formatedDateRelativeToNow: creationDateRelativeToNow,
   } = formatDate(createdAt)
 
   async function handleLikeComment() {
     if (isCommentLiked) {
       await api.delete(`/comments/${id}/like`)
 
-      setCommentLikesAmount(prev => prev - 1)
+      setCommentLikesAmount((prev) => prev - 1)
       setCommentLiked(false)
     } else {
       await api.post(`/comments/${id}/like`)
 
-      setCommentLikesAmount(prev => prev + 1)
+      setCommentLikesAmount((prev) => prev + 1)
       setCommentLiked(true)
     }
   }
@@ -73,21 +97,28 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
 
   return (
     <StyledComment>
-      <Link href={ `/user/${author.id}` }>
-        <Avatar username={ author.name } url={ author.avatar_url ?? unknownUser.src } hasBorder={false} />
+      <Link href={`/user/${author.id}`}>
+        <Avatar
+          username={author.name}
+          url={author.avatar_url ?? unknownUser.src}
+          hasBorder={false}
+        />
       </Link>
 
       <CommentWrapper>
         <CommentContentAndInfo>
           <header>
             <CommentAuthorAndTime>
-              <Link href={ `/user/${author.id}` }>
-                <strong>{ author.name }</strong>
-                <span>{ author.synthesis }</span>
+              <Link href={`/user/${author.id}`}>
+                <strong>{author.name}</strong>
+                <span>{author.synthesis}</span>
               </Link>
-              <time title={creationDateFormated} dateTime={createdAt.toISOString()}>
+              <time
+                title={creationDateFormated}
+                dateTime={createdAt.toISOString()}
+              >
                 <ClockIcon />
-                { creationDateRelativeToNow }
+                {creationDateRelativeToNow}
               </time>
             </CommentAuthorAndTime>
 
@@ -97,11 +128,11 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
                   <DotsThreeIcon />
                 </CommentOptionsMenuButton>
               }
-              isOpen={ isCommentOptionsMenuOpen }
-              amITheAuthor={ amITheAuthor }
-              handleToggleMenu={ setCommentOptionsMenuOpen }
-              handleChooseEditOption={ () => setEditCommentModalOpen(true) }
-              handleChooseDeleteOption={ () => setDeleteCommentModalOpen(true) }
+              isOpen={isCommentOptionsMenuOpen}
+              amITheAuthor={amITheAuthor}
+              handleToggleMenu={setCommentOptionsMenuOpen}
+              handleChooseEditOption={() => setEditCommentModalOpen(true)}
+              handleChooseDeleteOption={() => setDeleteCommentModalOpen(true)}
             />
           </header>
 
@@ -112,24 +143,35 @@ export function Comment({ id, author, content, createdAt, updatedAt, likesAmount
                 Edited
               </EditionWarn>
             )}
-            { commentContent }
+            {commentContent}
           </CommentContent>
         </CommentContentAndInfo>
 
         <footer>
-          <LikeButton onClick={ handleLikeComment } $isLiked={ isCommentLiked }>
-            <HeartIcon weight={ isCommentLiked ? "fill" : "regular" } />
-            
+          <LikeButton onClick={handleLikeComment} $isLiked={isCommentLiked}>
+            <HeartIcon weight={isCommentLiked ? 'fill' : 'regular'} />
+
             <span>
               Like
-              <strong>{ commentLikesAmount }</strong>
+              <strong>{commentLikesAmount}</strong>
             </span>
           </LikeButton>
         </footer>
       </CommentWrapper>
 
-      <EditCommentModal commentId={ id } defaultCommentContentValue={ commentContent } isOpen={ isEditCommentModalOpen } handleToggleOpen={ setEditCommentModalOpen } handleEditComment={ handleEditComment } />
-      <DeleteCommentModal commentId={ id } isOpen={ isDeleteCommentModalOpen } handleToggleModal={ setDeleteCommentModalOpen } handleDeleteComment={ handleDeleteComment } />
+      <EditCommentModal
+        commentId={id}
+        defaultCommentContentValue={commentContent}
+        isOpen={isEditCommentModalOpen}
+        handleToggleOpen={setEditCommentModalOpen}
+        handleEditComment={handleEditComment}
+      />
+      <DeleteCommentModal
+        commentId={id}
+        isOpen={isDeleteCommentModalOpen}
+        handleToggleModal={setDeleteCommentModalOpen}
+        handleDeleteComment={handleDeleteComment}
+      />
     </StyledComment>
   )
 }

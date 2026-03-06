@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 export const EditProfileModalForm = styled.form`
   ${({ theme }) => css`
@@ -23,7 +23,7 @@ export const EditProfileModalForm = styled.form`
       border: none;
       border-radius: ${theme.radius.md};
       cursor: pointer;
-      transition: background-color .1s;
+      transition: background-color 0.1s;
 
       &:hover {
         background: ${theme.colors.accentColorDark};

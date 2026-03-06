@@ -1,5 +1,9 @@
-import { PostActions } from "../PostActions";
-import { EngagementPanelDisplay, Separator, StyledEngagementPanel } from "./styles";
+import { PostActions } from '../PostActions'
+import {
+  EngagementPanelDisplay,
+  Separator,
+  StyledEngagementPanel,
+} from './styles'
 
 interface EngagementPanelProps {
   isPostLiked: boolean
@@ -9,22 +13,32 @@ interface EngagementPanelProps {
   onOpenComments: () => void
 }
 
-export function EngagementPanel({ isPostLiked, likesAmount, commentsAmount, onLikePost, onOpenComments }: EngagementPanelProps) {
+export function EngagementPanel({
+  isPostLiked,
+  likesAmount,
+  commentsAmount,
+  onLikePost,
+  onOpenComments,
+}: EngagementPanelProps) {
   return (
     <StyledEngagementPanel>
-      <PostActions onLikePost={ onLikePost } onOpenComments={ onOpenComments } isPostLiked={ isPostLiked } />
+      <PostActions
+        onLikePost={onLikePost}
+        onOpenComments={onOpenComments}
+        isPostLiked={isPostLiked}
+      />
 
       <EngagementPanelDisplay>
         <span>
-          <strong>{ likesAmount }</strong>
-          Like{ likesAmount !== 1 && "s" }
+          <strong>{likesAmount}</strong>
+          Like{likesAmount !== 1 && 's'}
         </span>
 
         <Separator>•</Separator>
 
         <span>
-          <strong>{ commentsAmount }</strong>
-          Comment{ commentsAmount !== 1 && "s" }
+          <strong>{commentsAmount}</strong>
+          Comment{commentsAmount !== 1 && 's'}
         </span>
       </EngagementPanelDisplay>
     </StyledEngagementPanel>

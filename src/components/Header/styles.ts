@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import styled, { css } from "styled-components";
-import { SearchField } from "../SearchField";
-import { Avatar } from "../Avatar";
+import styled, { css } from 'styled-components'
+import { SearchField } from '../SearchField'
+import { Avatar } from '../Avatar'
 
 export const StyledHeader = styled.header`
   ${({ theme }) => css`
@@ -51,13 +51,11 @@ export const HeaderSearchField = styled(SearchField)`
 `
 
 export const HeaderAvatar = styled(Avatar)`
-  ${({ theme }) => css`
-    display: none;
+  display: none;
 
-    @media (max-width: 1024px) {
-      display: block;
-      width: 3rem;
-      height: 3rem;
-    }
-  `}
+  @media (max-width: 1024px) {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+  }
 `

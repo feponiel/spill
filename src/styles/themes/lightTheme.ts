@@ -1,13 +1,13 @@
 import { Theme } from './_theme'
 
 export const lightTheme: Theme = {
-  name: "light",
+  name: 'light',
 
   defaults: {
     headerHeight: '70px',
     scrollBarWidth: '5px',
     containerWidth: '900px',
-    containerGap: '2rem'
+    containerGap: '2rem',
   },
 
   fonts: {
@@ -48,11 +48,11 @@ export const lightTheme: Theme = {
     accentColorDark: '#8e7f3a',
 
     shade100: '#1a191c',
-    shade300: '#4b484f', 
-    shade400: '#716d78', 
+    shade300: '#4b484f',
+    shade400: '#716d78',
     shade600: '#c9c8c7',
-    shade700: '#d2cecf', 
-    shade800: '#e1dddc', 
+    shade700: '#d2cecf',
+    shade800: '#e1dddc',
     shade900: '#f4f2ee',
 
     red500: '#f75a78',

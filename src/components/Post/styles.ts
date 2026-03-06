@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 export const StyledPost = styled.article`
   ${({ theme }) => css`
@@ -7,7 +7,7 @@ export const StyledPost = styled.article`
     border-radius: ${theme.radius.md};
 
     & + & {
-      margin-top: ${theme.space[8]}
+      margin-top: ${theme.space[8]};
     }
 
     header {
@@ -92,10 +92,10 @@ export const PostOptionsMenuButton = styled.button`
     background: none;
     color: ${theme.colors.shade100};
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     svg {
-      font-size: ${theme.fontSizes["2xl"]};
+      font-size: ${theme.fontSizes['2xl']};
     }
 
     &:hover {

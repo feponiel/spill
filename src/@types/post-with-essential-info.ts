@@ -1,4 +1,4 @@
-import { Post } from "@prisma/client"
+import { Post } from '@prisma/client'
 
 export type PostWithEssentialInfo = Post & {
   comments_amount: number

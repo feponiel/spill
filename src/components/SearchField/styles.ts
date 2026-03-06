@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 interface StyledSearchFieldProps {
   $isOpen: boolean
@@ -75,7 +75,7 @@ export const SearchFieldIcon = styled.label`
     border-top-right-radius: inherit;
     border-bottom-right-radius: inherit;
     outline: none;
-    transition: .2s;
+    transition: 0.2s;
 
     svg {
       font-size: ${theme.fontSizes.md};

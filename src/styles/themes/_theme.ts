@@ -1,6 +1,6 @@
 export interface Theme {
   name: string
-  
+
   defaults: {
     headerHeight: '70px'
     scrollBarWidth: '5px'

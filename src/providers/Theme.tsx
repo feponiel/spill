@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { ThemeContextProvider, ThemeType } from '@/contexts/ThemeContext'
 import { GlobalStyle } from '@/styles/global'

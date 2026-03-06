@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 export const StyledPostsContainer = styled.div`
   ${({ theme }) => css`
@@ -21,7 +21,7 @@ export const StyledPostsContainer = styled.div`
 
 export const NoPostsMessage = styled.p`
   ${({ theme }) => css`
-    font-size: ${theme.fontSizes["xl"]};
+    font-size: ${theme.fontSizes['xl']};
     color: ${theme.colors.shade400};
   `}
 `
@@ -29,7 +29,13 @@ export const NoPostsMessage = styled.p`
 export const CreatePostButton = styled.button`
   ${({ theme }) => css`
     position: fixed;
-    right: calc((100vw - ${theme.defaults.containerWidth} - ${theme.defaults.scrollBarWidth} + ${theme.defaults.containerGap}) / 2);
+    right: calc(
+      (
+          100vw - ${theme.defaults.containerWidth} -
+            ${theme.defaults.scrollBarWidth} + ${theme.defaults.containerGap}
+        ) /
+        2
+    );
     bottom: 5%;
     padding: ${theme.space[4]};
     line-height: 0;
@@ -38,14 +44,14 @@ export const CreatePostButton = styled.button`
     border: none;
     border-radius: ${theme.radius.md};
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background: ${theme.colors.accentColorDark};
     }
 
     svg {
-      font-size: ${theme.fontSizes["2xl"]};
+      font-size: ${theme.fontSizes['2xl']};
     }
 
     @media (max-width: 1024px) {

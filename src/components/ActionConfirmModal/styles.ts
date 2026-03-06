@@ -1,5 +1,5 @@
-import { DialogClose } from "@radix-ui/react-dialog";
-import styled, { css } from "styled-components";
+import { DialogClose } from '@radix-ui/react-dialog'
+import styled, { css } from 'styled-components'
 
 export const ModalFooter = styled.footer`
   ${({ theme }) => css`
@@ -13,7 +13,7 @@ export const ModalFooter = styled.footer`
       font-weight: bold;
       border-radius: ${theme.radius.md};
       cursor: pointer;
-      transition: background-color .1s;
+      transition: background-color 0.1s;
       flex: 1;
     }
   `}
@@ -46,7 +46,7 @@ export const ConfirmButton = styled.button`
 
 export const ModalDescription = styled.p`
   ${({ theme }) => css`
-    max-width:450px;
+    max-width: 450px;
     font-size: ${theme.fontSizes.md};
 
     @media (max-width: 1024px) {

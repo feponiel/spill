@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { api } from "@/lib/axios";
+import { create } from 'zustand'
+import { api } from '@/lib/axios'
 
 export interface AuthUser {
   id: string
@@ -14,7 +14,7 @@ interface AuthUserStore {
   user: AuthUser | null
   isLoading: boolean
   fetchUser: () => Promise<void>
-  updateUser: (data: Partial<AuthUser>) => void
+  updateUser: (_data: Partial<AuthUser>) => void
 }
 
 export const useAuthUserStore = create<AuthUserStore>((set) => ({
@@ -22,12 +22,13 @@ export const useAuthUserStore = create<AuthUserStore>((set) => ({
   isLoading: true,
 
   fetchUser: async () => {
-    set({ isLoading: true });
-    const { data } = await api.get("/me")
+    set({ isLoading: true })
+    const { data } = await api.get('/me')
     set({ user: data, isLoading: false })
   },
 
-  updateUser: (data) => set((state) => ({
-    user: state.user ? { ...state.user, ...data } : null
-  })),
+  updateUser: (data) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, ...data } : null,
+    })),
 }))

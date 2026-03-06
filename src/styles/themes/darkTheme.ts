@@ -1,13 +1,13 @@
 import { Theme } from './_theme'
 
 export const darkTheme: Theme = {
-  name: "dark",
+  name: 'dark',
 
   defaults: {
     headerHeight: '70px',
     scrollBarWidth: '5px',
     containerWidth: '900px',
-    containerGap: '2rem'
+    containerGap: '2rem',
   },
 
   fonts: {

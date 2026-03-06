@@ -1,5 +1,8 @@
-import { DropdownMenuContent, DropdownMenuSubContent } from "@radix-ui/react-dropdown-menu"
-import styled, { css } from "styled-components"
+import {
+  DropdownMenuContent,
+  DropdownMenuSubContent,
+} from '@radix-ui/react-dropdown-menu'
+import styled, { css } from 'styled-components'
 
 const dropdownStyles = css`
   ${({ theme }) => css`
@@ -35,7 +38,7 @@ const dropdownStyles = css`
 
     @media (max-width: 1024px) {
       width: 280px;
-      
+
       & > * {
         padding: ${theme.space[4]} ${theme.space[3]};
       }

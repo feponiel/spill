@@ -1,15 +1,15 @@
-import { ActionConfirmModal } from "@/components/ActionConfirmModal"
-import { signOut } from "next-auth/react"
+import { ActionConfirmModal } from '@/components/ActionConfirmModal'
+import { signOut } from 'next-auth/react'
 
 interface SignOutModalProps {
   isOpen: boolean
-  handleToggleModal: (open: boolean) => void
+  handleToggleModal: (_open: boolean) => void
 }
 
 export function SignOutModal({ isOpen, handleToggleModal }: SignOutModalProps) {
   function handleSignOut() {
     signOut({
-      callbackUrl: "/login"
+      callbackUrl: '/login',
     })
   }
 
@@ -18,9 +18,9 @@ export function SignOutModal({ isOpen, handleToggleModal }: SignOutModalProps) {
       title="Sign Out"
       description="Are you sure you want to sign out? You will be required to sign in again the next time you access the application."
       confirmationText="Sign Out"
-      isOpen={ isOpen }
-      handleToggleModal={ handleToggleModal }
-      handleConfirm={ handleSignOut }
+      isOpen={isOpen}
+      handleToggleModal={handleToggleModal}
+      handleConfirm={handleSignOut}
     />
   )
 }

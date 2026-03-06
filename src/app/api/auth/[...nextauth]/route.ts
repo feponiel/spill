@@ -6,7 +6,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(),
 
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
 
   providers: [
@@ -32,10 +32,8 @@ export const authOptions: NextAuthOptions = {
 
       return session
     },
-  }
-
+  },
 }
-
 
 const handler = NextAuth(authOptions)
 

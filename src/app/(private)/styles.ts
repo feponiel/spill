@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 export const PrivateLayoutContainer = styled.div`
   ${({ theme }) => css`

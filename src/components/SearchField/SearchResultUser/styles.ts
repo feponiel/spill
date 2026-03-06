@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styled, { css } from "styled-components";
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export const StyledSearchResultUser = styled.li``
 
@@ -10,7 +10,7 @@ export const SearchResultUserLink = styled(Link)`
     gap: ${theme.space[3]};
     padding: ${theme.space[3]} ${theme.space[2]};
     text-decoration: none;
-    transition: .2s;
+    transition: 0.2s;
 
     > img {
       width: 3rem;
@@ -20,7 +20,7 @@ export const SearchResultUserLink = styled(Link)`
     &:hover {
       background: ${theme.colors.shade700};
     }
-    
+
     @media (max-width: 530px) {
       padding: ${theme.space[5]} ${theme.space[2]};
 
@@ -53,7 +53,7 @@ export const UserInfo = styled.div`
       }
 
       span {
-        font-size: ${theme.fontSizes.sm}
+        font-size: ${theme.fontSizes.sm};
       }
     }
   `}

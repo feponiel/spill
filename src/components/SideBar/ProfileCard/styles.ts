@@ -1,6 +1,6 @@
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import Link from "next/link";
-import styled, { css } from "styled-components";
+import { DialogTrigger } from '@radix-ui/react-dialog'
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export const StyledProfileCard = styled.div`
   ${({ theme }) => css`
@@ -86,7 +86,7 @@ export const EditProfileButton = styled(DialogTrigger)`
     color: ${theme.colors.accentColor};
     background: none;
     border: none;
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {
@@ -102,7 +102,7 @@ export const SettingsMenuButton = styled.button`
     color: ${theme.colors.shade400};
     background: none;
     border: none;
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {
@@ -122,7 +122,7 @@ export const SignOutButton = styled(DialogTrigger)`
     color: ${theme.colors.shade400};
     background: none;
     border: none;
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {

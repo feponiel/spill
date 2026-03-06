@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { FeedPosts } from "./FeedPosts";
+import { Metadata } from 'next'
+import { FeedPosts } from './FeedPosts'
 
 export const metadata: Metadata = {
-  title: "Feed"
+  title: 'Feed',
 }
 
 export default function Feed() {

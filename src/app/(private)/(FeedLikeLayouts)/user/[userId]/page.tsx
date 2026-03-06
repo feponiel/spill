@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { UserShowcase } from "./UserShowcase";
+import { Metadata } from 'next'
+import { UserShowcase } from './UserShowcase'
 
 export const metadata: Metadata = {
-  title: "Feed"
+  title: 'Feed',
 }
 
 export default async function UserProfile({
@@ -12,5 +12,5 @@ export default async function UserProfile({
 }) {
   const { userId } = await params
 
-  return <UserShowcase userId={ userId } />
+  return <UserShowcase userId={userId} />
 }

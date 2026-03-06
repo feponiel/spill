@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/prisma"
-import { NextRequest, NextResponse } from "next/server"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../auth/[...nextauth]/route"
+import { prisma } from '@/lib/prisma'
+import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]/route'
 
 export async function GET() {
   const session = await getServerSession(authOptions)
@@ -32,7 +32,7 @@ export async function GET() {
 
 export async function PATCH(request: NextRequest) {
   const session = await getServerSession(authOptions)
-  
+
   if (!session?.user?.id) {
     return NextResponse.json(null, { status: 401 })
   }
@@ -41,13 +41,13 @@ export async function PATCH(request: NextRequest) {
 
   const updatedUser = await prisma.user.update({
     where: {
-      id: session.user.id
+      id: session.user.id,
     },
 
     data: {
       synthesis,
-      banner_url
-    }
+      banner_url,
+    },
   })
 
   return NextResponse.json(updatedUser)
@@ -55,17 +55,16 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE() {
   const session = await getServerSession(authOptions)
-  
+
   if (!session?.user?.id) {
     return NextResponse.json(null, { status: 401 })
   }
 
   await prisma.user.delete({
     where: {
-      id: session.user.id
+      id: session.user.id,
     },
   })
 
   return new Response(null, { status: 204 })
 }
-

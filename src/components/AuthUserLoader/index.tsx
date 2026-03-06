@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { useEffect } from "react";
-import { useAuthUserStore } from "@/store/useAuthUserStore";
+import { useEffect } from 'react'
+import { useAuthUserStore } from '@/store/useAuthUserStore'
 
 export function AuthUserLoader() {
   useEffect(() => {
-    useAuthUserStore.getState().fetchUser();
-  }, []);
+    useAuthUserStore.getState().fetchUser()
+  }, [])
 
-  return null;
+  return null
 }
