@@ -8,6 +8,7 @@ export const StyledProfileCard = styled.div`
     flex-direction: column;
     background: ${theme.colors.shade800};
     border-radius: ${theme.radius.md};
+    box-shadow: ${theme.shadows.default};
     overflow: hidden;
 
     &.loading {

@@ -47,15 +47,20 @@ export const lightTheme: Theme = {
     accentColor: '#c9b458',
     accentColorDark: '#8e7f3a',
 
-    shade100: '#1a191c',
-    shade300: '#4b484f',
-    shade400: '#716d78',
-    shade600: '#c9c8c7',
-    shade700: '#d2cecf',
-    shade800: '#e1dddc',
-    shade900: '#f4f2ee',
+    shade100: '#0b0d12',
+    shade300: '#252833',
+    shade400: '#525866',
+    shade600: '#d6dbe4',
+    shade700: '#e6ebf2',
+    shade800: '#f3f6fb',
+    shade900: '#f9fbff',
 
     red500: '#f75a78',
+  },
+
+  shadows: {
+    default: '0 0.25rem 0.875rem rgba(0, 0, 0, 0.08)',
+    header: '0 0.375rem 1rem rgba(15, 23, 42, 0.06)',
   },
 
   space: {

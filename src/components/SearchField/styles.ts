@@ -24,13 +24,15 @@ export const SearchFieldWrapper = styled.form`
     align-items: center;
     border: 1px solid ${theme.colors.shade600};
     border-radius: ${theme.radius.full};
+    box-shadow: ${theme.shadows.default};
 
     &:focus-within {
       border: 1px solid ${theme.colors.accentColor};
     }
 
     @media (max-width: 1024px) {
-      border: 2px solid ${theme.colors.shade600};
+      border: 1px solid ${theme.colors.shade600};
+      box-shadow: none;
     }
   `}
 `

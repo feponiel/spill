@@ -3,21 +3,24 @@ import styled from 'styled-components'
 import { css } from 'styled-components'
 
 export const StyledSearchResult = styled(CollapsibleContent)`
-  width: 100%;
-  overflow: hidden;
+  ${({ theme }) => css`
+    width: 100%;
+    overflow: hidden;
+    filter: drop-shadow(${theme.shadows.default});
 
-  &[data-state='open'] {
-    animation: slideDown 200ms ease-out;
-  }
+    &[data-state='open'] {
+      animation: slideDown 200ms ease-out;
+    }
 
-  @keyframes slideDown {
-    from {
-      height: 0;
+    @keyframes slideDown {
+      from {
+        height: 0;
+      }
+      to {
+        height: var(--radix-collapsible-content-height);
+      }
     }
-    to {
-      height: var(--radix-collapsible-content-height);
-    }
-  }
+  `}
 `
 
 export const SearchResultContainer = styled.div`

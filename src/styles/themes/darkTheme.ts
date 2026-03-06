@@ -58,6 +58,11 @@ export const darkTheme: Theme = {
     red500: '#f75a78',
   },
 
+  shadows: {
+    default: '', // no shadows
+    header: '',
+  },
+
   space: {
     px: '1px',
     1: '0.25rem',

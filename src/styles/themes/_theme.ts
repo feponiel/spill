@@ -56,6 +56,11 @@ export interface Theme {
     red500: string
   }
 
+  shadows: {
+    default: string
+    header: string
+  }
+
   space: {
     px: '1px'
     1: '0.25rem'

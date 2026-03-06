@@ -5,6 +5,7 @@ export const StyledPost = styled.article`
     padding: ${theme.space[6]} ${theme.space[5]};
     background: ${theme.colors.shade800};
     border-radius: ${theme.radius.md};
+    box-shadow: ${theme.shadows.default};
 
     & + & {
       margin-top: ${theme.space[8]};

@@ -13,6 +13,7 @@ export const StyledHeader = styled.header`
     height: ${theme.defaults.headerHeight};
     position: fixed;
     background: ${theme.colors.shade800};
+    box-shadow: ${theme.shadows.header};
     z-index: 1;
 
     @media (max-width: 1024px) {

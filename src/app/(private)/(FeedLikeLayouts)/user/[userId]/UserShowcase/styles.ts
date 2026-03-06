@@ -22,6 +22,7 @@ export const UserProfileInfo = styled.div`
     padding-bottom: ${theme.space[10]};
     background: ${theme.colors.shade800};
     border-radius: ${theme.radius.md};
+    box-shadow: ${theme.shadows.default};
     overflow: hidden;
 
     header {
