@@ -59,7 +59,7 @@ export const darkTheme: Theme = {
   },
 
   shadows: {
-    default: '', // no shadows
+    default: '',
     header: '',
   },
 
