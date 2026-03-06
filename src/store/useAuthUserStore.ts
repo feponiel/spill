@@ -19,7 +19,7 @@ interface AuthUserStore {
 
 export const useAuthUserStore = create<AuthUserStore>((set) => ({
   user: null,
-  isLoading: false,
+  isLoading: true,
 
   fetchUser: async () => {
     set({ isLoading: true });
