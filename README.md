@@ -1,4 +1,4 @@
-![Spill Social Media Banner](/.github/spill-banner.png)
+<img src=".github/spill-banner.png" width="1000"/>
 
 # Spill: Social Media Application
 Spill is a modern open-source social media platform built for developers to share ideas, projects, and programming insights in a clean and minimal interface.
@@ -16,12 +16,15 @@ Then, you'll need to set up your [Github OAuth API Credentials](https://github.c
 
 > You can read more about it in: [Authorizing OAuth apps - GitHub Docs](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
 
+Also, don't forget to setup your PostgreSQL connection link.
+> There are many ways to setup a postgresql database. I strongly reccomend you to create one using [Neon](https://neon.com/). It's for free and you can read more about it in [PostgreSQL Tutorial](https://neon.com/postgresql/tutorial)
+
 > You can see an example of how to setup your environment variables in [.env.example](/.env.example)
 
 ```
 # Your .env file will look like this
 
-DATABASE_URL="file:./database.db"
+DATABASE_URL="YOUR_POSTGRESQL_CONNECTION_LINK"
 
 GITHUB_CLIENT_ID="YOUR_GITHUB_OAUTH_CLIENT_ID"
 GITHUB_CLIENT_SECRET="YOUR_GITHUB_OAUTH_CLIENT_SECRET"

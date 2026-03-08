@@ -7,15 +7,16 @@ export async function GET(request: NextRequest) {
   const [exactMatch, related] = await Promise.all([
     prisma.user.findFirst({
       where: {
-        name: { equals: search },
+        name: { equals: search, mode: 'insensitive' } as any,
       },
     }),
     prisma.user.findMany({
       where: {
         name: {
           contains: search,
+          mode: 'insensitive',
           not: { equals: search },
-        },
+        } as any,
       },
       take: 6,
     }),
