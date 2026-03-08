@@ -1,4 +1,4 @@
-![Spill Social Media Banner](/.github/spill-banner.svg)
+![Spill Social Media Banner](/.github/spill-banner.png)
 
 # Spill: Social Media Application
 Spill is a modern open-source social media platform built for developers to share ideas, projects, and programming insights in a clean and minimal interface.
