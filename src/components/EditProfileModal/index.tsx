@@ -114,6 +114,8 @@ export function EditProfileModal({
           placeholder="URL of your banner picture..."
           defaultValue={user.banner_url ?? ''}
           label="Banner picture"
+          hasValidationError={!!errors.banner_url}
+          validationErrorMessage={errors.banner_url?.message}
           {...register('banner_url')}
         />
 
