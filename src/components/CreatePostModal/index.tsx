@@ -76,7 +76,7 @@ export function CreatePostModal({
           {isSubmitting ? (
             <LoadingWheel size="sm" color="white" />
           ) : (
-            <span>Submit Edit</span>
+            <span>Create Post</span>
           )}
         </button>
       </CreatePostModalForm>

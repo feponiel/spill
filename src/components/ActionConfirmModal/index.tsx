@@ -7,12 +7,14 @@ import {
   ModalFooter,
 } from './styles'
 import { Modal } from '@/components/Modal'
+import { LoadingWheel } from '../LoadingWheel'
 
 interface ActionConfirmModalProps {
   title: string
   description: string
   confirmationText: string
   isOpen: boolean
+  isLoading: boolean
   handleToggleModal: (_open: boolean) => void
   handleConfirm: () => void
 }
@@ -22,6 +24,7 @@ export function ActionConfirmModal({
   description,
   confirmationText,
   isOpen,
+  isLoading,
   handleToggleModal,
   handleConfirm,
 }: ActionConfirmModalProps) {
@@ -38,7 +41,11 @@ export function ActionConfirmModal({
       <ModalFooter>
         <CancelButton>Cancel</CancelButton>
         <ConfirmButton onClick={handleConfirm}>
-          {confirmationText}
+          {isLoading ? (
+            <LoadingWheel size="sm" color="white" />
+          ) : (
+            <span>{confirmationText}</span>
+          )}
         </ConfirmButton>
       </ModalFooter>
     </Modal>

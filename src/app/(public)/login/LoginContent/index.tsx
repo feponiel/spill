@@ -9,10 +9,16 @@ import {
 } from './styles'
 import { GithubLogoIcon } from '@phosphor-icons/react'
 import { signIn } from 'next-auth/react'
+import { useState } from 'react'
+import { LoadingWheel } from '@/components/LoadingWheel'
 
 export function LoginContent() {
-  function handleSignIn(provider: string) {
-    signIn(provider, {
+  const [isLoading, setLoading] = useState(false)
+
+  async function handleSignIn(provider: string) {
+    setLoading(true)
+
+    await signIn(provider, {
       callbackUrl: '/',
     })
   }
@@ -27,8 +33,17 @@ export function LoginContent() {
       </p>
 
       <GithubAuthButton onClick={() => handleSignIn('github')}>
-        <GithubLogoIcon size={24} weight="duotone" />
-        Continue with GitHub
+        {isLoading ? (
+          <>
+            <LoadingWheel size="sm" color="white" />
+            Logging in...
+          </>
+        ) : (
+          <>
+            <GithubLogoIcon size={24} weight="duotone" />
+            <span>Continue with GitHub</span>
+          </>
+        )}
       </GithubAuthButton>
 
       <ImportantLinksWrapper>

@@ -23,6 +23,7 @@ import { ContentWrapper } from './ContentWrapper'
 import { api } from '@/lib/axios'
 import Link from 'next/link'
 import { CommentWithEssentialInfo } from '@/@types/comment-with-essential-info'
+import { useDebouncedCallback } from '@/hooks/useDebouncedCallback'
 
 interface Author {
   id: string
@@ -67,6 +68,7 @@ export function Post({
   const [postLikesAmount, setPostLikesAmount] = useState(likesAmount)
   const [postCommentsAmount, setPostCommentsAmount] = useState(commentsAmount)
   const [isCommentSectionOpen, setCommentSectionOpen] = useState(false)
+  const [isCommentsLoading, setCommentsLoading] = useState(false)
   const [isPostLiked, setPostLiked] = useState(isLiked)
   const [isPostOptionsMenuOpen, setPostOptionsMenuOpen] = useState(false)
   const [isEditPostModalOpen, setEditPostModalOpen] = useState(false)
@@ -78,18 +80,17 @@ export function Post({
     formatedDateRelativeToNow: postDateRelativeToNow,
   } = formatDate(publishedAt)
 
+  const sendLikeRequest = useDebouncedCallback(async (newLiked: boolean) => {
+    await api[newLiked ? 'post' : 'delete'](`/posts/${id}/like`)
+  }, 500)
+
   async function handleLikePost() {
-    if (isPostLiked) {
-      await api.delete(`/posts/${id}/like`)
+    const newLiked = !isPostLiked
 
-      setPostLikesAmount((prev) => prev - 1)
-      setPostLiked(false)
-    } else {
-      await api.post(`/posts/${id}/like`)
+    setPostLiked(newLiked)
+    setPostLikesAmount((prev) => (newLiked ? prev + 1 : prev - 1))
 
-      setPostLikesAmount((prev) => prev + 1)
-      setPostLiked(true)
-    }
+    sendLikeRequest(newLiked)
   }
 
   async function fetchComments(pageToFetch = 1) {
@@ -115,26 +116,38 @@ export function Post({
   async function handleCreateComment() {
     setPostCommentsAmount((prev) => prev + 1)
     setPage(1)
+
+    setCommentsLoading(true)
     await fetchComments(1)
+    setCommentsLoading(false)
   }
 
   async function handleDeleteComment() {
     setPostCommentsAmount((prev) => prev - 1)
     setPage(1)
+
+    setCommentsLoading(true)
     await fetchComments(1)
+    setCommentsLoading(false)
   }
 
   async function handleOpenComments() {
-    if (comments.length === 0) {
+    if (comments.length === 0 && !isCommentSectionOpen) {
       setPage(1)
+
+      setCommentsLoading(true)
       await fetchComments(1)
+      setCommentsLoading(false)
     }
   }
 
-  function handleViewMoreComments() {
+  async function handleViewMoreComments() {
     const nextPage = page + 1
     setPage(nextPage)
-    fetchComments(nextPage)
+
+    setCommentsLoading(true)
+    await fetchComments(nextPage)
+    setCommentsLoading(false)
   }
 
   function handleEditPost(newPostContent: string) {
@@ -209,12 +222,7 @@ export function Post({
 
       <Collapsible.Root
         open={isCommentSectionOpen}
-        onOpenChange={async (open) => {
-          if (open && comments.length === 0) {
-            await handleOpenComments()
-          }
-          setCommentSectionOpen(open)
-        }}
+        onOpenChange={setCommentSectionOpen}
       >
         <EngagementPanel
           isPostLiked={isPostLiked}
@@ -228,6 +236,7 @@ export function Post({
           postId={id}
           commentList={comments}
           hasMore={hasMore}
+          isCommentsLoading={isCommentsLoading}
           onCreateNewComment={handleCreateComment}
           onDeleteComment={handleDeleteComment}
           onViewMore={handleViewMoreComments}

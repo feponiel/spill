@@ -30,6 +30,7 @@ interface CommentSectionProps {
   postId: string
   commentList: CommentWithEssentialInfo[]
   hasMore: boolean
+  isCommentsLoading: boolean
   onCreateNewComment: () => void
   onDeleteComment: () => void
   onViewMore: () => void
@@ -39,6 +40,7 @@ export function CommentSection({
   postId,
   commentList,
   hasMore,
+  isCommentsLoading,
   onCreateNewComment,
   onDeleteComment,
   onViewMore,
@@ -55,7 +57,9 @@ export function CommentSection({
 
   async function handleCreateNewComment(formData: createNewCommentFormData) {
     const { content } = formData
+
     await api.post(`/posts/${postId}/comments`, { content })
+
     onCreateNewComment()
     reset()
   }
@@ -91,36 +95,48 @@ export function CommentSection({
           </CommentForm>
         </CommentArea>
 
-        <CommentList className={commentList.length > 0 ? 'with-comments' : ''}>
-          <CommentsWrapper>
-            {commentList.map((comment) => (
-              <Comment
-                key={comment.id}
-                id={comment.id}
-                author={{
-                  id: comment.author_id,
-                  name: comment.author.name,
-                  synthesis: comment.author.synthesis,
-                  avatar_url: comment.author.avatar_url,
-                }}
-                content={comment.content}
-                createdAt={comment.created_at}
-                updatedAt={comment.updated_at}
-                likesAmount={comment.likes_amount}
-                isLiked={comment.is_liked}
-                amITheAuthor={user?.id === comment.author_id}
-                handleDelete={onDeleteComment}
-              />
-            ))}
-          </CommentsWrapper>
+        <CommentList
+          className={
+            commentList.length > 0 || isCommentsLoading ? 'with-space' : ''
+          }
+        >
+          {isCommentsLoading ? (
+            <CommentsWrapper className="loading">
+              <LoadingWheel size="md" />
+            </CommentsWrapper>
+          ) : (
+            <>
+              <CommentsWrapper>
+                {commentList.map((comment) => (
+                  <Comment
+                    key={comment.id}
+                    id={comment.id}
+                    author={{
+                      id: comment.author_id,
+                      name: comment.author.name,
+                      synthesis: comment.author.synthesis,
+                      avatar_url: comment.author.avatar_url,
+                    }}
+                    content={comment.content}
+                    createdAt={comment.created_at}
+                    updatedAt={comment.updated_at}
+                    likesAmount={comment.likes_amount}
+                    isLiked={comment.is_liked}
+                    amITheAuthor={user?.id === comment.author_id}
+                    handleDelete={onDeleteComment}
+                  />
+                ))}
+              </CommentsWrapper>
 
-          {hasMore && (
-            <footer>
-              <ViewMoreButton onClick={onViewMore}>
-                <ArrowDownIcon weight="bold" />
-                View more comments
-              </ViewMoreButton>
-            </footer>
+              {hasMore && (
+                <footer>
+                  <ViewMoreButton onClick={onViewMore}>
+                    <ArrowDownIcon weight="bold" />
+                    View more comments
+                  </ViewMoreButton>
+                </footer>
+              )}
+            </>
           )}
         </CommentList>
       </CommentsSectionWrapper>

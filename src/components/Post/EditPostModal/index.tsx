@@ -49,10 +49,10 @@ export function EditPostModal({
     resolver: zodResolver(schema),
   })
 
-  function handleConfirmEdition(formData: editPostFormData) {
+  async function handleConfirmEdition(formData: editPostFormData) {
     const { content } = formData
 
-    api.patch(`/posts/${postId}`, {
+    await api.patch(`/posts/${postId}`, {
       content,
     })
 

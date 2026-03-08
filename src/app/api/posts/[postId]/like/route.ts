@@ -25,15 +25,18 @@ export async function POST(
     return NextResponse.json(null, { status: 404 })
   }
 
-  await prisma.postLike.create({
-    data: {
-      user: {
-        connect: { id: author.id },
-      },
-      post: {
-        connect: { id: postId },
+  await prisma.postLike.upsert({
+    where: {
+      user_id_post_id: {
+        user_id: author.id,
+        post_id: postId,
       },
     },
+    create: {
+      user: { connect: { id: author.id } },
+      post: { connect: { id: postId } },
+    },
+    update: {},
   })
 
   return NextResponse.json(null, { status: 201 })
@@ -61,12 +64,10 @@ export async function DELETE(
     return NextResponse.json(null, { status: 404 })
   }
 
-  await prisma.postLike.delete({
+  await prisma.postLike.deleteMany({
     where: {
-      user_id_post_id: {
-        post_id: postId,
-        user_id: author.id,
-      },
+      post_id: postId,
+      user_id: author.id,
     },
   })
 

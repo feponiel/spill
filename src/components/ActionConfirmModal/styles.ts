@@ -7,14 +7,23 @@ export const ModalFooter = styled.footer`
     gap: ${theme.space[2]};
 
     button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3.25rem;
       margin-top: ${theme.space[4]};
-      padding: ${theme.space[4]} ${theme.space[6]};
       font-size: ${theme.fontSizes.sm};
-      font-weight: bold;
+      font-weight: ${theme.fontWeights.bold};
       border-radius: ${theme.radius.md};
       cursor: pointer;
       transition: background-color 0.1s;
       flex: 1;
+    }
+
+    @media (max-width: 1024px) {
+      textarea {
+        height: 7rem;
+      }
     }
   `}
 `

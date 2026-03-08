@@ -116,7 +116,7 @@ export const CommentList = styled.div`
     flex-direction: column;
     gap: ${theme.space[7]};
 
-    &.with-comments {
+    &.with-space {
       margin-top: ${theme.space[10]};
     }
   `}
@@ -128,6 +128,11 @@ export const CommentsWrapper = styled.ul`
     flex-direction: column;
     gap: ${theme.space[6]};
     list-style: none;
+
+    &.loading {
+      flex-direction: row;
+      justify-content: center;
+    }
   `}
 `
 

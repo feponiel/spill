@@ -21,7 +21,12 @@ export const StyledLoginContent = styled.div`
 
 export const GithubAuthButton = styled.button`
   ${({ theme }) => css`
-    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${theme.space[5]};
+    width: 15rem;
+    height: 4rem;
     background: linear-gradient(180deg, #141414 0%, #0f0f0f 50%, #0a0a0a 100%);
     border: 1px solid ${theme.colors.shade600};
     color: ${theme.name == 'light'
@@ -31,10 +36,6 @@ export const GithubAuthButton = styled.button`
     font-size: ${theme.fontSizes.lg};
     border-radius: ${theme.radius.md};
     margin-top: ${theme.space[4]};
-    padding: 0 ${theme.space[6]};
-    display: flex;
-    align-items: center;
-    gap: ${theme.space[5]};
     transition: 0.2s;
     cursor: pointer;
     box-shadow:
@@ -55,10 +56,6 @@ export const GithubAuthButton = styled.button`
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.05),
         0 6px 16px rgba(0, 0, 0, 0.75);
-    }
-
-    @media (max-width: 1024px) {
-      height: 5rem;
     }
   `}
 `
