@@ -24,15 +24,19 @@ export const InfoDisplay = styled.div`
     display: flex;
     align-items: center;
     gap: ${theme.space[4]};
-
-    a {
-      text-decoration: none;
-    }
   `}
 `
 
 export const Info = styled.div`
   ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+
+    > a {
+      align-self: flex-start;
+      text-decoration: none;
+    }
+
     strong {
       display: block;
       line-height: ${theme.lineHeights.base};
