@@ -54,7 +54,7 @@ model Comment {
   updated_at DateTime @updatedAt
 
   author       User          @relation(fields: [author_id], references: [id], onDelete: Cascade)
-  post         Post          @relation(fields: [post_id], references: [id])
+  post         Post          @relation(fields: [post_id], references: [id], onDelete: Cascade)
   commentLikes CommentLike[]
 
   @@index([author_id])
