@@ -5,7 +5,7 @@ import { authOptions } from '../../auth/[...nextauth]/route'
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { commentId: string } },
+  { params }: { params: Promise<{ commentId: string }> },
 ) {
   const { commentId } = await params
   const { content } = await request.json()
@@ -41,7 +41,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { commentId: string } },
+  { params }: { params: Promise<{ commentId: string }> },
 ) {
   const { commentId } = await params
 

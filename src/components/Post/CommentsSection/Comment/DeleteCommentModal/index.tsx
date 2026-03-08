@@ -1,5 +1,6 @@
 import { ActionConfirmModal } from '@/components/ActionConfirmModal'
 import { api } from '@/lib/axios'
+import { useState } from 'react'
 
 interface DeleteCommentModalProps {
   commentId: string
@@ -14,8 +15,12 @@ export function DeleteCommentModal({
   handleToggleModal,
   handleDeleteComment,
 }: DeleteCommentModalProps) {
+  const [isLoading, setLoading] = useState(false)
+
   async function handleConfirmDeletion() {
+    setLoading(true)
     await api.delete(`/comments/${commentId}`)
+    setLoading(false)
 
     handleDeleteComment()
   }
@@ -26,6 +31,7 @@ export function DeleteCommentModal({
       description="Are you sure you want to delete this comment? This action is totally irreversible and you will not be able to undo it."
       confirmationText="Delete"
       isOpen={isOpen}
+      isLoading={isLoading}
       handleToggleModal={handleToggleModal}
       handleConfirm={handleConfirmDeletion}
     />

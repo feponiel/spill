@@ -51,10 +51,10 @@ export function EditCommentModal({
     resolver: zodResolver(schema),
   })
 
-  function handleConfirmEdition(formData: editCommentFormData) {
+  async function handleConfirmEdition(formData: editCommentFormData) {
     const { content } = formData
 
-    api.patch(`/comments/${commentId}`, {
+    await api.patch(`/comments/${commentId}`, {
       content,
     })
 

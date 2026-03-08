@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { commentId: string } },
+  { params }: { params: Promise<{ commentId: string }> },
 ) {
   const { commentId } = await params
 
@@ -41,7 +41,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { commentId: string } },
+  { params }: { params: Promise<{ commentId: string }> },
 ) {
   const { commentId } = await params
 
