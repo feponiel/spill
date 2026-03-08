@@ -62,6 +62,7 @@ export const PostHR = styled.hr`
     border: none;
     height: 1px;
     background: ${theme.colors.shade600};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -69,6 +70,7 @@ export const PostH1 = styled.h1`
   ${({ theme }) => css`
     font-size: 1.4rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -76,6 +78,7 @@ export const PostH2 = styled.h2`
   ${({ theme }) => css`
     font-size: 1.25rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[2]};
   `}
 `
 
@@ -83,6 +86,7 @@ export const PostH3 = styled.h3`
   ${({ theme }) => css`
     font-size: 1.05rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -90,6 +94,7 @@ export const PostH4 = styled.h4`
   ${({ theme }) => css`
     font-size: 0.9rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -97,6 +102,7 @@ export const PostH5 = styled.h5`
   ${({ theme }) => css`
     font-size: 0.75rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -104,6 +110,7 @@ export const PostH6 = styled.h6`
   ${({ theme }) => css`
     font-size: 0.6rem;
     line-height: ${theme.lineHeights.base};
+    margin-bottom: ${theme.space[3]};
   `}
 `
 
@@ -122,6 +129,14 @@ export const PostBlockQuote = styled.blockquote`
       width: 3px;
       height: 100%;
       background: ${theme.colors.shade600};
+    }
+  `}
+`
+
+export const PostParagraph = styled.p`
+  ${({ theme }) => css`
+    &:not(:last-child) {
+      margin-bottom: ${theme.space[3]};
     }
   `}
 `

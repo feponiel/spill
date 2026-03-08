@@ -13,12 +13,14 @@ import {
   PostImage,
   PostLink,
   PostOL,
+  PostParagraph,
   PostPre,
   PostUL,
   Tag,
 } from './styles'
 import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/androidstudio.css'
+import remarkGfm from 'remark-gfm'
 
 interface ContentWrapperProps {
   children: ReactNode
@@ -27,6 +29,7 @@ interface ContentWrapperProps {
 export function ContentWrapper({ children }: ContentWrapperProps) {
   return (
     <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
       rehypePlugins={[[rehypeHighlight, { detect: true }]]}
       components={{
         img: ({ src, alt }) => {
@@ -85,7 +88,7 @@ export function ContentWrapper({ children }: ContentWrapperProps) {
             })
           }
 
-          return <p>{processChildren(children)}</p>
+          return <PostParagraph>{processChildren(children)}</PostParagraph>
         },
       }}
     >
